@@ -15,9 +15,9 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@app/*": ["./*"],
-      "@home/*": ["./modules/home/*"],
-      "@common/*": ["./modules/common/*"]
+      "@home": ["./modules/home"],
+      "@common": ["./modules/common"],
+      "@auth": ["./modules/auth"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

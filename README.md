@@ -4,6 +4,16 @@
 
 supastarter is the ultimate starter template for your SaaS application.
 
+## Goals
+
+- Scalable & production-ready starter template
+
+## Principles
+
+- Focus on DX
+- Fully typed
+- Modular & Extensible
+
 ## Features
 
 ⚒️ Tooling:
@@ -15,14 +25,22 @@ supastarter is the ultimate starter template for your SaaS application.
 
 🚀 Features
 
-- Authentication
-- Internationalization
+- Authentication (next-auth)
+- Internationalization (next-i18next)
 - Landing page
+- Next font (privacy friendly google fonts)
+- Progress bar (nprogress)
+- Sitemap & robots.txt (next-sitemap)
+
 - Blog (⚡️ Pro)
 - Subscription (⚡️ Pro)
 - Analytics (⚡️ Pro)
 
 ---
+
+## Documentation
+
+[Go to documentation &rarr;](/docs/README.md)
 
 ## Getting Started
 
