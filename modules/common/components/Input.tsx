@@ -4,19 +4,41 @@ import React, { forwardRef } from 'react';
 export const input = cva('input', {
   variants: {
     size: {
-      small: ['text-sm', 'py-1.5', 'px-3', 'rounded-md'],
-      medium: ['text-base', 'py-2', 'px-4', 'rounded-lg'],
-      large: ['text-lg', 'py-3', 'px-6', 'rounded-xl'],
+      small: ['text-sm', 'py-1.5', 'px-3', 'rounded-lg'],
+      medium: ['text-base', 'py-3', 'px-4', 'rounded-xl'],
+      large: ['text-lg', 'py-4', 'px-8', 'rounded-2xl'],
+    },
+    status: {
+      default: [
+        'border-zinc-300',
+        'focus:ring-zinc-400',
+        'focus:border-zinc-400',
+        'focus:ring-zinc-400',
+        'focus:border-zinc-400',
+        'dark:border-zinc-700',
+        'dark:focus:ring-zinc-600',
+        'dark:focus:border-zinc-600',
+      ],
+      error: ['border-rose-600', 'focus:ring-rose-600', 'focus:border-rose-600'],
+      success: ['border-green-600', 'focus:ring-green-600', 'focus:border-green-600'],
     },
   },
   compoundVariants: [
     {
-      className:
-        'border-gray-300 dark:border-gray-700 dark:focus:border-primary-300 focus:ring-primary-500 focus:border-primary-500 focus:ring-opacity-20 focus:ring-2 w-full bg-transparent',
+      className: [
+        'border-zinc-300',
+        'w-full',
+        'bg-transparent',
+        // focus
+        'focus:ring-1',
+        // dark mode
+        ,
+      ],
     },
   ],
   defaultVariants: {
     size: 'medium',
+    status: 'default',
   },
 });
 
@@ -26,6 +48,8 @@ export type InputProps = React.InputHTMLAttributes<HTMLInputElement> &
   };
 
 // eslint-disable-next-line react/display-name
-export const Input = forwardRef<HTMLInputElement, InputProps>(({ className, size, htmlSize, ...props }, ref) => (
-  <input className={input({ size, className })} size={htmlSize} ref={ref} {...props} />
-));
+export const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ className, size, status, htmlSize, ...props }, ref) => (
+    <input className={input({ size, status, className })} size={htmlSize} ref={ref} {...props} />
+  )
+);

@@ -4,7 +4,7 @@ import { SessionProvider } from 'next-auth/react';
 import { appWithTranslation } from 'next-i18next';
 import { ThemeProvider } from 'next-themes';
 import { AppProps } from 'next/app';
-import '../styles/globals.css';
+import '../styles/globals.scss';
 
 // import lexend font with @next/font
 const manrope = Manrope({
@@ -19,9 +19,9 @@ function App({ Component, pageProps }: AppProps) {
           --font-manrope: ${manrope.style.fontFamily};
         }
       `}</style>
-      <ProgressBar />
 
       <ThemeProvider forcedTheme={(Component as any).theme || undefined} attribute="class">
+        <ProgressBar />
         <SessionProvider>
           <Component {...pageProps} />
         </SessionProvider>

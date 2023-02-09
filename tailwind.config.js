@@ -4,10 +4,19 @@ module.exports = {
   content: ['./pages/**/*.{js,ts,jsx,tsx}', './modules/**/*.{js,ts,jsx,tsx}'],
   darkMode: ['class'],
   theme: {
+    container: {
+      center: true,
+      padding: '2rem',
+      screens: {
+        md: '640px',
+        lg: '1024px',
+        xl: '1024px',
+        '2xl': '1024px',
+      },
+    },
     extend: {
       fontFamily: {
         sans: ['var(--font-manrope)', 'sans-serif'],
-        primary: ['var(--font-manrope)', 'sans-serif'],
         serif: ['var(--font-manrope)', 'serif'],
       },
       colors: {

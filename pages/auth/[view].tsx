@@ -1,20 +1,41 @@
 import { AuthPage, AuthView } from '@auth';
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
+import { getServerSession } from 'next-auth';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { authOptions } from '../api/auth/[...nextauth]';
 
 const authViews: AuthView[] = ['signup', 'signin', 'forgot-password', 'reset-password'];
 
-export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res, locale, params, query }) => {
   const view = params?.view as string;
 
-  if (!view || !authViews.includes(view as AuthView)) {
+  if (!view || !authViews.includes(view as AuthView))
     return {
       redirect: {
         destination: '/',
         permanent: true,
       },
     };
-  }
+
+  const session = await getServerSession(req, res, authOptions);
+
+  // if user is not logged in and tries to access reset-password page, redirect to signin page
+  if (!session && view === 'reset-password')
+    return {
+      redirect: {
+        destination: '/auth/signin',
+        permanent: false,
+      },
+    };
+
+  // if user is logged in and tries to access any other auth page, redirect to home page
+  if (session && view !== 'reset-password')
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
 
   return {
     props: {
@@ -23,11 +44,6 @@ export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
     },
   };
 };
-
-export const getStaticPaths: GetStaticPaths = ({ locales }) => ({
-  paths: locales?.map((locale) => authViews.map((view) => ({ params: { view }, locale }))).flat() ?? [],
-  fallback: false,
-});
 
 const AuthActionPage = ({ view }: { view: AuthView }) => <AuthPage view={view} />;
 

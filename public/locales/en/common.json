@@ -1,1 +1,13 @@
-{}
+{
+  "colorMode": {
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "menu": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "signIn": "Sign in",
+    "signOut": "Sign out"
+  }
+}

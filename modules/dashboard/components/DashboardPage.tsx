@@ -1,34 +1,18 @@
-import { Button, ColorModeToggle, Logo } from '@common';
+import { Button } from '@common';
 import { signOut, useSession } from 'next-auth/react';
-import Head from 'next/head';
 import Link from 'next/link';
+import { AppLayout } from '../../common/components/AppLayout';
 
 export function DashboardPage() {
   const { data: session } = useSession();
 
   return (
-    <>
-      <Head>
-        <title>awesome.saas</title>
-      </Head>
-      <div className="min-h-screen p-8 bg-blue-50 dark:bg-gray-800 dark:text-white">
-        <Logo />
-        <p className="mt-4">Welcome to the home page.</p>
+    <AppLayout>
+      <p className="mt-4">Welcome to the dashboard</p>
 
-        <ColorModeToggle />
+      <Link href="/admin">Admin &rarr;</Link>
 
-        {session ? (
-          <>
-            Signed in as {session.user.email} <br />
-            <Button onClick={() => signOut()}>Sign out</Button>
-          </>
-        ) : (
-          <>
-            Not signed in <br />
-            <Link href="/signin">Sign in</Link>
-          </>
-        )}
-      </div>
-    </>
+      <Button onClick={() => signOut()}>Sign out</Button>
+    </AppLayout>
   );
 }

@@ -29,15 +29,15 @@ export default function SigninModeSwitch({
   );
 
   return (
-    <div className={`${className} flex justify-center w-full border-b-2 border-gray-100 dark:border-gray-700`}>
+    <div
+      className={`${className} flex w-full justify-center rounded-xl bg-zinc-100 p-1 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300`}
+    >
       {modes.map((mode) => (
         <button
           key={mode.key}
           type="button"
-          className={`block px-6 py-2 w-1/2 mb-[-2px] border-b-2  text-sm ${
-            mode.key === activeMode
-              ? 'border-primary-500 font-bold text-primary-700 dark:text-primary-300'
-              : 'border-transparent'
+          className={`block w-1/2 rounded-lg px-6 py-1.5 text-xs ${
+            mode.key === activeMode ? 'bg-white font-bold text-zinc-900 dark:bg-zinc-900 dark:text-white' : ''
           }`}
           onClick={() => onChange(mode.key)}
         >

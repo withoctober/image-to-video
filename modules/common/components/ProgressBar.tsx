@@ -1,7 +1,14 @@
+import { useTheme } from 'next-themes';
 import NextNProgress from 'nextjs-progressbar';
-import tailwindConfig from '../../../tailwind.config';
+import { useIsClient } from 'usehooks-ts';
 
 export function ProgressBar() {
-  const progressBarColor = (tailwindConfig.theme?.extend?.colors as any)?.primary[300] ?? undefined;
-  return <NextNProgress height={4} color={progressBarColor} showOnShallow={true} />;
+  const { resolvedTheme } = useTheme();
+  const isClientSide = useIsClient();
+
+  if (!isClientSide) {
+    return null;
+  }
+
+  return <NextNProgress height={4} color={resolvedTheme === 'light' ? '#000000' : '#ffffff'} showOnShallow={true} />;
 }

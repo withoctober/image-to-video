@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-weight: 500;
+}
+
+a {
+  @apply text-black text-opacity-75 dark:text-white dark:text-opacity-75;
+
+  &:hover,
+  &:focus {
+    @apply underline;
+  }
+}
