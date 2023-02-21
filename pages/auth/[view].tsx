@@ -1,8 +1,8 @@
 import { AuthPage, AuthView } from '@auth';
+import { authOptions } from '@auth/server';
 import { GetServerSideProps } from 'next';
 import { getServerSession } from 'next-auth';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { authOptions } from '../api/auth/[...nextauth]';
 
 const authViews: AuthView[] = ['signup', 'signin', 'forgot-password', 'reset-password'];
 

@@ -57,6 +57,7 @@ export const button = cva('button', {
       discord: ['bg-[#7289DA]', 'text-white', 'border-transparent', 'hover:bg-[#5E74C0]'],
       google: ['bg-[#4285F4]', 'text-white', 'border-transparent', 'hover:bg-[#357AE8]'],
       apple: ['bg-black', 'text-white', 'border-transparent', 'hover:bg-[#1E1E1E]', 'ring-black'],
+      twitter: ['bg-[#1DA1F2]', 'text-white', 'border-transparent', 'hover:bg-[#1A94E0]'],
     },
     size: {
       small: ['text-sm', 'py-2', 'px-4', 'rounded-lg', 'h-10'],

@@ -115,10 +115,9 @@ export function SigninForm() {
 
       <hr className="my-8 border-black border-opacity-5 dark:border-white dark:border-opacity-5" />
 
-      <div className="flex w-full flex-col gap-3 sm:flex-row">
+      <div className="flex w-full flex-col gap-2 sm:flex-row">
         <SocialSigninButton provider="google" onClick={() => signIn('google')} />
         <SocialSigninButton provider="twitter" onClick={() => signIn('twitter')} />
-        <SocialSigninButton provider="apple" onClick={() => signIn('apple')} />
       </div>
     </>
   );

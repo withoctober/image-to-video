@@ -17,7 +17,9 @@
     "paths": {
       "@home": ["./modules/home"],
       "@common": ["./modules/common"],
-      "@auth": ["./modules/auth"]
+      "@auth": ["./modules/auth"],
+      "@auth/*": ["./modules/auth/*"],
+      "@email/*": ["./modules/email/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

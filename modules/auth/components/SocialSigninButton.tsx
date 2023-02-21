@@ -1,7 +1,7 @@
 import { SocialSigninProvider } from '@auth';
 import { button } from '@common';
 import { useMemo } from 'react';
-import { FaApple, FaDiscord, FaGithub, FaGoogle } from 'react-icons/fa';
+import { FaApple, FaDiscord, FaGithub, FaGoogle, FaTwitter } from 'react-icons/fa';
 
 export function SocialSigninButton({
   provider,
@@ -31,6 +31,10 @@ export function SocialSigninButton({
       github: {
         name: 'Github',
         icon: <FaGithub />,
+      },
+      twitter: {
+        name: 'Twitter',
+        icon: <FaTwitter />,
       },
       discord: {
         name: 'Discord',
