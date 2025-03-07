@@ -131,7 +131,9 @@ export function NavBar() {
 					</div>
 
 					<div className="flex flex-1 items-center justify-end gap-3">
-						<ColorModeToggle />
+						{config.ui.enabledThemes.length > 1 && (
+							<ColorModeToggle />
+						)}
 						{config.i18n.enabled && (
 							<Suspense>
 								<LocaleSwitch />

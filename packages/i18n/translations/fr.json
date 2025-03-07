@@ -1,0 +1,777 @@
+{
+    "admin": {
+        "menu": {
+            "organizations": "Organisations",
+            "users": "Utilisateurs"
+        },
+        "organizations": {
+            "backToList": "Retour aux organisations",
+            "confirmDelete": {
+                "confirm": "Supprimer",
+                "message": "Êtes-vous sûr de vouloir supprimer cette organisation ? Cette action ne peut pas être annulée.",
+                "title": "Supprimer l'organisation"
+            },
+            "create": "Créer",
+            "delete": "Supprimer",
+            "deleteOrganization": {
+                "deleted": "L'organisation a été supprimée avec succès !",
+                "deleting": "Suppression de l'organisation...",
+                "notDeleted": "L'organisation n'a pas pu être supprimée. Veuillez réessayer."
+            },
+            "edit": "Modifier",
+            "form": {
+                "createTitle": "Créer une organisation",
+                "name": "Nom de l'organisation",
+                "notifications": {
+                    "error": "Impossible de sauvegarder l'organisation. Veuillez réessayer plus tard.",
+                    "success": "L'organisation a été sauvegardée."
+                },
+                "save": "Sauvegarder",
+                "updateTitle": "Modifier l'organisation"
+            },
+            "loading": "Chargement des organisations...",
+            "membersCount": "{count} {count, plural, one {membre} other {membres}}",
+            "search": "Rechercher une organisation...",
+            "title": "Gérer les organisations"
+        },
+        "title": "Administration",
+        "users": {
+            "confirmDelete": {
+                "confirm": "Supprimer",
+                "message": "Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action ne peut pas être annulée.",
+                "title": "Supprimer l'utilisateur"
+            },
+            "delete": "Supprimer",
+            "deleteUser": {
+                "deleted": "L'utilisateur a été supprimé avec succès !",
+                "deleting": "Suppression de l'utilisateur...",
+                "notDeleted": "L'utilisateur n'a pas pu être supprimé. Veuillez réessayer."
+            },
+            "emailVerified": {
+                "verified": "Email vérifié",
+                "waiting": "Email en attente de vérification"
+            },
+            "impersonate": "Usurper",
+            "impersonation": {
+                "impersonating": "Usurpation en tant que {name}..."
+            },
+            "loading": "Chargement des utilisateurs...",
+            "resendVerificationMail": {
+                "error": "Impossible de renvoyer l'email de vérification. Veuillez réessayer.",
+                "submitting": "Renvoyer l'email de vérification...",
+                "success": "L'email de vérification a été envoyé.",
+                "title": "Renvoyer l'email de vérification"
+            },
+            "search": "Rechercher par nom ou email...",
+            "title": "Gérer les utilisateurs",
+            "assignAdminRole": "Attribuer le rôle d'administrateur",
+            "removeAdminRole": "Retirer le rôle d'administrateur"
+        },
+        "description": "Gérez votre application."
+    },
+    "app": {
+        "menu": {
+            "accountSettings": "Paramètres du compte",
+            "admin": "Admin",
+            "aiChatbot": "Chatbot IA",
+            "organizationSettings": "Paramètres de l'organisation",
+            "start": "Démarrer"
+        },
+        "userMenu": {
+            "accountSettings": "Paramètres du compte",
+            "colorMode": "Mode couleur",
+            "documentation": "Documentation",
+            "home": "Accueil",
+            "logout": "Déconnexion"
+        }
+    },
+    "auth": {
+        "errors": {
+            "invalidEmailOrPassword": "Les identifiants que vous avez saisis sont invalides. Veuillez les vérifier et réessayer.",
+            "unknown": "Une erreur s'est produite. Veuillez réessayer.",
+            "userNotFound": "Cet utilisateur n'existe pas",
+            "failedToCreateUser": "Impossible de créer l'utilisateur. Veuillez réessayer.",
+            "failedToCreateSession": "Impossible de créer une session. Veuillez réessayer.",
+            "failedToUpdateUser": "Impossible de mettre à jour l'utilisateur. Veuillez réessayer.",
+            "failedToGetSession": "Impossible d'obtenir la session.",
+            "invalidPassword": "Le mot de passe saisi est incorrect.",
+            "invalidEmail": "L'email saisi est invalide.",
+            "invalidToken": "Le token que vous avez saisi est invalide ou a expiré.",
+            "credentialAccountNotFound": "Compte non trouvé.",
+            "emailCanNotBeUpdated": "L'email n'a pas pu être mis à jour. Veuillez réessayer.",
+            "emailNotVerified": "Veuillez vérifier votre email d'abord avant de vous connecter.",
+            "failedToGetUserInfo": "Impossible de charger les informations de l'utilisateur.",
+            "idTokenNotSupported": "Le token ID n'est pas supporté.",
+            "passwordTooLong": "Le mot de passe est trop long.",
+            "passwordTooShort": "Le mot de passe est trop court.",
+            "providerNotFound": "Ce fournisseur n'est pas supporté.",
+            "socialAccountAlreadyLinked": "Ce compte est déjà lié à un utilisateur.",
+            "userEmailNotFound": "Email non trouvé.",
+            "userAlreadyExists": "Cet utilisateur existe déjà.",
+            "invalidInvitation": "L'invitation est invalide ou a expiré.",
+            "sessionExpired": "La session a expiré.",
+            "failedToUnlinkLastAccount": "Échec de la dissociation du compte",
+            "accountNotFound": "Compte non trouvé"
+        },
+        "forgotPassword": {
+            "backToSignin": "Retour à la connexion",
+            "email": "Email",
+            "hints": {
+                "linkNotSent": {
+                    "message": "Nous sommes désolés, mais nous n'avons pas pu vous envoyer un lien pour réinitialiser votre mot de passe. Veuillez réessayer plus tard.",
+                    "title": "Lien non envoyé"
+                },
+                "linkSent": {
+                    "message": "Nous vous avons envoyé un lien pour continuer. Veuillez vérifier votre boîte de réception.",
+                    "title": "Lien envoyé"
+                }
+            },
+            "message": "Veuillez entrer votre adresse email et nous vous enverrons un lien pour réinitialiser votre mot de passe.",
+            "submit": "Envoyer le lien",
+            "title": "Mot de passe oublié ?"
+        },
+        "login": {
+            "continueWith": "Ou continuez avec",
+            "createAnAccount": "Créer un compte",
+            "dontHaveAnAccount": "Vous n'avez pas encore de compte ?",
+            "forgotPassword": "Mot de passe oublié ?",
+            "hints": {
+                "invalidCredentials": "L'email ou le mot de passe que vous avez saisis sont invalides. Veuillez réessayer.",
+                "linkSent": {
+                    "message": "Nous vous avons envoyé un lien pour continuer. Veuillez vérifier votre boîte de réception.",
+                    "title": "Lien envoyé"
+                }
+            },
+            "loginWithPasskey": "Connexion avec passkey",
+            "modes": {
+                "magicLink": "Lien magique",
+                "password": "Mot de passe"
+            },
+            "submit": "Se connecter",
+            "subtitle": "Veuillez entrer vos identifiants pour vous connecter.",
+            "title": "Bienvenue de nouveau",
+            "sendMagicLink": "Envoyer le lien magique"
+        },
+        "resetPassword": {
+            "backToSignin": "Retour à la connexion",
+            "hints": {
+                "error": "Nous sommes désolés, mais nous n'avons pas pu réinitialiser votre mot de passe. Veuillez réessayer.",
+                "success": "Votre mot de passe a été réinitialisé avec succès."
+            },
+            "message": "Veuillez entrer un nouveau mot de passe.",
+            "newPassword": "Nouveau mot de passe",
+            "submit": "Réinitialiser le mot de passe",
+            "title": "Réinitialisez votre mot de passe"
+        },
+        "signup": {
+            "alreadyHaveAccount": "Vous avez déjà un compte ?",
+            "email": "Email",
+            "hints": {
+                "signupFailed": "Nous sommes désolés, mais nous n'avons pas pu créer votre compte. Veuillez réessayer plus tard.",
+                "verifyEmail": "Nous vous avons envoyé un lien pour vérifier votre email. Veuillez vérifier votre boîte de réception."
+            },
+            "message": "Nous sommes heureux que vous souhaitiez nous rejoindre. Veuillez remplir le formulaire ci-dessous pour créer votre compte.",
+            "name": "Nom",
+            "password": "Mot de passe",
+            "signIn": "Se connecter",
+            "submit": "Créer un compte",
+            "title": "Créer un compte"
+        }
+    },
+    "blog": {
+        "description": "Lisez les dernières nouvelles de notre entreprise",
+        "title": "Mon blog génial"
+    },
+    "changelog": {
+        "description": "Restez à jour avec les dernières modifications de notre produit.",
+        "title": "Journal des modifications"
+    },
+    "common": {
+        "confirmation": {
+            "cancel": "Annuler",
+            "confirm": "Confirmer"
+        },
+        "menu": {
+            "blog": "Blog",
+            "changelog": "Journal des modifications",
+            "contact": "Contact",
+            "dashboard": "Tableau de bord",
+            "docs": "Docs",
+            "faq": "FAQ",
+            "login": "Connexion",
+            "pricing": "Tarification"
+        },
+        "tableOfContents": {
+            "title": "Sur cette page"
+        }
+    },
+    "contact": {
+        "description": "Nous sommes là pour vous aider. Veuillez utiliser le formulaire ci-dessous pour nous contacter.",
+        "form": {
+            "email": "Email",
+            "message": "Message",
+            "name": "Nom",
+            "notifications": {
+                "error": "Nous sommes désolés, mais nous n'avons pas pu envoyer votre message. Veuillez réessayer plus tard.",
+                "success": "Votre message a été envoyé avec succès. Nous vous répondrons dès que possible."
+            },
+            "submit": "Envoyer le message"
+        },
+        "title": "Contactez-nous"
+    },
+    "documentation": {
+        "title": "Documentation"
+    },
+    "faq": {
+        "description": "Vous avez des questions ? Nous avons ce qu'il vous faut.",
+        "title": "Questions fréquentes"
+    },
+    "mail": {
+        "common": {
+            "openLinkInBrowser": "Si vous souhaitez ouvrir le lien dans un autre navigateur que celui par défaut, copiez et collez ce lien :",
+            "otp": "Mot de passe à usage unique",
+            "useLink": "ou utilisez le lien suivant :"
+        },
+        "emailVerification": {
+            "body": "Salut,\nveuillez cliquer sur le lien ci-dessous pour vérifier cette nouvelle adresse email.",
+            "confirmEmail": "Vérifier l'email",
+            "subject": "Vérifiez votre email"
+        },
+        "forgotPassword": {
+            "body": "Salut,\nvous avez demandé une réinitialisation de mot de passe.\n\nCliquez sur le bouton ci-dessous pour réinitialiser votre mot de passe.",
+            "resetPassword": "Réinitialiser le mot de passe",
+            "subject": "Réinitialisez votre mot de passe"
+        },
+        "magicLink": {
+            "body": "Salut,\nvous avez demandé un email de connexion de supastarter.\n\nCliquez sur le lien ci-dessous pour vous connecter.",
+            "login": "Connexion",
+            "subject": "Connexion à supastarter"
+        },
+        "newUser": {
+            "body": "Salut,\nmerci de vous être inscrit à supastarter.\n\nPour commencer à utiliser notre application, veuillez confirmer votre adresse email en cliquant sur le lien ci-dessous.",
+            "confirmEmail": "Confirmer l'email",
+            "subject": "Confirmez votre email"
+        },
+        "newsletterSignup": {
+            "body": "Merci de vous être inscrit à la newsletter de supastarter. Nous vous tiendrons informé des dernières nouvelles et mises à jour.",
+            "subject": "Bienvenue dans notre newsletter"
+        },
+        "organizationInvitation": {
+            "body": "Vous avez été invité à rejoindre l'organisation {organizationName}. Cliquez sur le bouton ci-dessous ou copiez et collez le lien dans votre navigateur de choix pour accepter l'invitation et rejoindre l'organisation.",
+            "headline": "Rejoindre l'organisation {organizationName}",
+            "join": "Rejoindre l'organisation",
+            "subject": "Vous avez été invité à rejoindre une organisation"
+        }
+    },
+    "newsletter": {
+        "email": "Email",
+        "hints": {
+            "error": {
+                "message": "Impossible de s'abonner à la newsletter. Veuillez réessayer plus tard."
+            },
+            "success": {
+                "message": "Merci de vous être abonné à notre newsletter. Nous vous tiendrons informé.",
+                "title": "Abonné"
+            }
+        },
+        "submit": "S'abonner",
+        "subtitle": "Soyez parmi les premiers à accéder à supastarter.nextjs.",
+        "title": "Accédez en avant-première"
+    },
+    "onboarding": {
+        "account": {
+            "avatar": "Avatar",
+            "avatarDescription": "Cliquez sur le cercle ou déposez une image pour télécharger votre avatar.",
+            "name": "Nom"
+        },
+        "continue": "Continuer",
+        "message": "Juste quelques étapes rapides pour vous aider à démarrer.",
+        "notifications": {
+            "accountSetupFailed": "Nous sommes désolés, mais nous n'avons pas pu configurer votre compte. Veuillez réessayer plus tard."
+        },
+        "step": "Étape {step} / {total}",
+        "title": "Configurez votre compte"
+    },
+    "organizations": {
+        "createForm": {
+            "name": "Nom de l'organisation",
+            "notifications": {
+                "error": "Nous sommes désolés, mais nous n'avons pas pu créer votre organisation. Veuillez réessayer plus tard.",
+                "success": "Votre organisation a été créée. Vous pouvez maintenant inviter des membres."
+            },
+            "submit": "Créer une organisation",
+            "subtitle": "Entrez un nom pour votre organisation pour commencer. Vous pouvez changer le nom plus tard dans les paramètres de l'organisation.",
+            "title": "Créer une organisation"
+        },
+        "invitationAlert": {
+            "description": "Vous devez vous connecter ou créer un compte pour rejoindre l'organisation.",
+            "title": "Vous avez été invité à rejoindre une organisation."
+        },
+        "invitationModal": {
+            "accept": "Accepter",
+            "decline": "Décliner",
+            "description": "Vous avez été invité à rejoindre l'organisation {organizationName}. Voulez-vous accepter l'invitation et rejoindre l'organisation ?",
+            "title": "Rejoindre l'organisation"
+        },
+        "organizationSelect": {
+            "createNewOrganization": "Créer une nouvelle organisation",
+            "organizations": "Organisations",
+            "personalAccount": "Compte personnel"
+        },
+        "organizationsGrid": {
+            "createNewOrganization": "Créer une nouvelle organisation",
+            "title": "Vos organisations"
+        },
+        "roles": {
+            "admin": "Admin",
+            "member": "Membre",
+            "owner": "Propriétaire"
+        },
+        "settings": {
+            "changeName": {
+                "title": "Nom de l'organisation"
+            },
+            "deleteOrganization": {
+                "confirmation": "Êtes-vous sûr de vouloir supprimer votre organisation ?",
+                "description": "Supprimez définitivement votre organisation. Une fois que vous avez supprimé votre organisation, il n'y a pas de retour en arrière. Pour confirmer, veuillez entrer votre mot de passe ci-dessous :",
+                "submit": "Supprimer l'organisation",
+                "title": "Supprimer l'organisation"
+            },
+            "logo": {
+                "description": "Téléchargez un logo pour votre organisation.",
+                "title": "Logo de l'organisation"
+            },
+            "members": {
+                "activeMembers": "Membres actifs",
+                "description": "Voir tous les membres actifs et les invitations en attente de votre organisation.",
+                "invitations": {
+                    "empty": "Vous n'avez pas encore invité de membres.",
+                    "expiresAt": "Expire à {date}",
+                    "invitationStatus": {
+                        "accepted": "Accepté",
+                        "canceled": "Annulé",
+                        "pending": "En attente",
+                        "rejected": "Rejeté"
+                    },
+                    "revoke": "Révoquer l'invitation",
+                    "resend": "Renvoyer l'invitation"
+                },
+                "inviteMember": {
+                    "description": "Pour inviter un nouveau membre, envoyez-lui une invitation.",
+                    "email": "Email",
+                    "notifications": {
+                        "error": {
+                            "description": "Nous n'avons pas pu inviter le membre. Veuillez réessayer plus tard.",
+                            "title": "Impossible d'inviter le membre"
+                        },
+                        "success": {
+                            "description": "Le membre a été invité.",
+                            "title": "Membre invité"
+                        }
+                    },
+                    "role": "Rôle",
+                    "submit": "Inviter",
+                    "title": "Inviter un membre"
+                },
+                "leaveOrganization": "Quitter l'organisation",
+                "notifications": {
+                    "removeMember": {
+                        "error": {
+                            "description": "Impossible de retirer le membre de votre organisation. Veuillez réessayer."
+                        },
+                        "loading": {
+                            "description": "Retrait du membre de l'organisation..."
+                        },
+                        "success": {
+                            "description": "Le membre a été retiré avec succès de votre organisation."
+                        }
+                    },
+                    "revokeInvitation": {
+                        "error": {
+                            "description": "L'invitation n'a pas pu être révoquée. Veuillez réessayer plus tard."
+                        },
+                        "loading": {
+                            "description": "Révocation de l'invitation..."
+                        },
+                        "success": {
+                            "description": "L'invitation a été révoquée."
+                        }
+                    },
+                    "updateMembership": {
+                        "error": {
+                            "description": "Impossible de mettre à jour l'adhésion à l'organisation. Veuillez réessayer."
+                        },
+                        "loading": {
+                            "description": "Mise à jour de l'adhésion..."
+                        },
+                        "success": {
+                            "description": "L'adhésion a été mise à jour avec succès"
+                        }
+                    },
+                    "resendInvitation": {
+                        "loading": {
+                            "description": "Renvoyer l'invitation..."
+                        },
+                        "success": {
+                            "description": "Invitation envoyée"
+                        },
+                        "error": {
+                            "description": "Impossible d'envoyer l'invitation. Veuillez réessayer."
+                        }
+                    }
+                },
+                "pendingInvitations": "Invitations en attente",
+                "removeMember": "Retirer le membre",
+                "title": "Membres"
+            },
+            "notifications": {
+                "organizationDeleted": "Votre organisation a été supprimée.",
+                "organizationNameNotUpdated": "Nous n'avons pas pu mettre à jour le nom de votre organisation. Veuillez réessayer plus tard.",
+                "organizationNameUpdated": "Le nom de votre organisation a été mis à jour.",
+                "organizationNotDeleted": "Nous n'avons pas pu supprimer votre organisation. Veuillez réessayer plus tard."
+            },
+            "subtitle": "Gérez les paramètres de l'organisation.",
+            "title": "Organisation",
+            "dangerZone": {
+                "title": "Zone de danger"
+            }
+        },
+        "start": {
+            "subtitle": "Bienvenue sur la page de démarrage de cette organisation !"
+        }
+    },
+    "pricing": {
+        "choosePlan": "Choisir un plan",
+        "contactSales": "Contacter les ventes",
+        "description": "Choisissez le plan qui vous convient le mieux.",
+        "getStarted": "Commencer",
+        "month": "{count, plural, one {mois} other {{count} mois}}",
+        "monthly": "Mensuel",
+        "products": {
+            "basic": {
+                "description": "Parfait pour les petites équipes.",
+                "features": {
+                    "anotherFeature": "Une autre fonctionnalité incroyable",
+                    "limitedSupport": "Support limité"
+                },
+                "title": "Basique"
+            },
+            "enterprise": {
+                "description": "Plan personnalisé adapté à vos besoins",
+                "features": {
+                    "enterpriseSupport": "Support entreprise",
+                    "unlimitedProjects": "Projets illimités"
+                },
+                "title": "Entreprise"
+            },
+            "free": {
+                "description": "Commencez gratuitement",
+                "features": {
+                    "anotherFeature": "Une autre fonctionnalité incroyable",
+                    "limitedSupport": "Support limité"
+                },
+                "title": "Gratuit"
+            },
+            "lifetime": {
+                "description": "Achetez une fois. Utilisez pour toujours.",
+                "features": {
+                    "extendSupport": "Support prolongé",
+                    "noRecurringCosts": "Pas de coûts récurrents"
+                },
+                "title": "À vie"
+            },
+            "pro": {
+                "description": "Idéal pour les équipes",
+                "features": {
+                    "anotherFeature": "Une autre fonctionnalité incroyable",
+                    "fiveMembers": "Jusqu'à 5 membres",
+                    "fullSupport": "Support complet"
+                },
+                "title": "Pro"
+            }
+        },
+        "purchase": "Acheter",
+        "recommended": "Recommandé",
+        "subscribe": "S'abonner",
+        "title": "Tarification",
+        "trialPeriod": "{days} {days, plural, one {jour} other {{count} jours}} d'essai gratuit",
+        "year": "{count, plural, one {an} other {{count} ans}}",
+        "yearly": "Annuel",
+        "perSeat": "siège"
+    },
+    "settings": {
+        "account": {
+            "avatar": {
+                "description": "Pour changer votre avatar, cliquez sur l'image dans ce bloc et sélectionnez un fichier de votre ordinateur à télécharger.",
+                "notifications": {
+                    "error": "Impossible de mettre à jour l'avatar",
+                    "success": "L'avatar a été mis à jour avec succès"
+                },
+                "title": "Votre avatar"
+            },
+            "changeEmail": {
+                "description": "Pour changer votre email, entrez le nouvel email et cliquez sur sauvegarder. Vous devrez confirmer le nouvel email avant qu'il ne devienne actif.",
+                "notifications": {
+                    "error": "Impossible de mettre à jour l'email",
+                    "success": "L'email a été mis à jour avec succès"
+                },
+                "title": "Votre email"
+            },
+            "changeName": {
+                "notifications": {
+                    "error": "Impossible de mettre à jour le nom",
+                    "success": "Le nom a été mis à jour avec succès"
+                },
+                "title": "Votre nom"
+            },
+            "deleteAccount": {
+                "confirmation": "Êtes-vous sûr de vouloir supprimer votre compte ?",
+                "description": "Supprimez définitivement votre compte. Une fois que vous avez supprimé votre compte, il n'y a pas de retour en arrière. Pour confirmer, veuillez entrer votre mot de passe ci-dessous :",
+                "notifications": {
+                    "error": "Impossible de supprimer le compte",
+                    "success": "Le compte a été supprimé avec succès"
+                },
+                "submit": "Supprimer le compte",
+                "title": "Supprimer le compte"
+            },
+            "language": {
+                "description": "Pour changer la langue de l'application pour votre compte, sélectionnez une langue dans la liste et cliquez sur sauvegarder.",
+                "notifications": {
+                    "error": "Impossible de mettre à jour la langue",
+                    "success": "La langue a été mise à jour avec succès"
+                },
+                "title": "Votre langue"
+            },
+            "security": {
+                "activeSessions": {
+                    "description": "Voici toutes les sessions actives de votre compte. Cliquez sur le X pour mettre fin à une session spécifique.",
+                    "title": "Sessions actives",
+                    "notifications": {
+                        "revokeSession": {
+                            "success": "Session révoquée"
+                        }
+                    }
+                },
+                "changePassword": {
+                    "currentPassword": "Mot de passe actuel",
+                    "newPassword": "Nouveau mot de passe",
+                    "notifications": {
+                        "error": "Impossible de mettre à jour le mot de passe",
+                        "success": "Le mot de passe a été mis à jour avec succès"
+                    },
+                    "title": "Votre mot de passe"
+                },
+                "connectedAccounts": {
+                    "connect": "Connecter",
+                    "disconnect": "Déconnecter",
+                    "title": "Comptes connectés"
+                },
+                "passkeys": {
+                    "description": "Utilisez des passkeys comme alternative sécurisée aux mots de passe.",
+                    "notifications": {
+                        "addPasskey": {
+                            "error": {
+                                "title": "Impossible d'ajouter la passkey"
+                            },
+                            "success": {
+                                "title": "Passkey ajoutée"
+                            }
+                        },
+                        "deletePasskey": {
+                            "error": {
+                                "title": "Impossible de supprimer la passkey"
+                            },
+                            "loading": {
+                                "title": "Suppression de la passkey..."
+                            },
+                            "success": {
+                                "title": "Passkey supprimée"
+                            }
+                        }
+                    },
+                    "title": "Passkeys"
+                },
+                "setPassword": {
+                    "description": "Vous n'avez pas encore défini de mot de passe. Pour en définir un, vous devez passer par le processus de réinitialisation du mot de passe. Cliquez sur le bouton ci-dessous pour envoyer un email pour réinitialiser votre mot de passe et suivez les instructions dans l'email.",
+                    "notifications": {
+                        "error": "Impossible de définir le mot de passe",
+                        "success": "Le mot de passe a été défini avec succès"
+                    },
+                    "submit": "Définir le mot de passe",
+                    "title": "Votre mot de passe"
+                },
+                "title": "Sécurité"
+            },
+            "subtitle": "Gérez les paramètres de votre compte personnel.",
+            "title": "Paramètres du compte"
+        },
+        "billing": {
+            "createCustomerPortal": {
+                "label": "Gérer la facturation",
+                "notifications": {
+                    "error": {
+                        "title": "Impossible de créer une session de portail client. Veuillez réessayer."
+                    }
+                }
+            },
+            "activePlan": {
+                "status": {
+                    "active": "Actif",
+                    "canceled": "Annulé",
+                    "expired": "Expiré",
+                    "incomplete": "Incomplet",
+                    "past_due": "En retard",
+                    "paused": "Suspendu",
+                    "trialing": "En période d'essai",
+                    "unpaid": "Impayé"
+                },
+                "title": "Votre plan"
+            },
+            "changePlan": {
+                "description": "Choisissez un plan auquel vous abonner.",
+                "title": "Changer votre plan"
+            },
+            "title": "Facturation"
+        },
+        "menu": {
+            "account": {
+                "billing": "Facturation",
+                "dangerZone": "Zone de danger",
+                "general": "Général",
+                "security": "Sécurité",
+                "title": "Compte"
+            },
+            "organization": {
+                "billing": "Facturation",
+                "general": "Général",
+                "members": "Membres",
+                "title": "Organisation",
+                "dangerZone": "Zone de danger"
+            }
+        },
+        "save": "Sauvegarder"
+    },
+    "start": {
+        "subtitle": "Voir les dernières statistiques de votre entreprise géniale.",
+        "welcome": "Bienvenue {name} !"
+    },
+    "zod": {
+        "errors": {
+            "invalid_arguments": "Arguments de fonction invalides",
+            "invalid_date": "Date invalide",
+            "invalid_enum_value": "Valeur d'énumération invalide. Attendu {- options}, reçu '{received}'",
+            "invalid_intersection_types": "Les résultats d'intersection n'ont pas pu être fusionnés",
+            "invalid_literal": "Valeur littérale invalide, attendu {expected}",
+            "invalid_return_type": "Type de retour de fonction invalide",
+            "invalid_string": {
+                "cuid": "Invalide {validation}",
+                "datetime": "Invalide {validation}",
+                "email": "Invalide {validation}",
+                "endsWith": "Entrée invalide : doit se terminer par \"{endsWith}\"",
+                "regex": "Invalide",
+                "startsWith": "Entrée invalide : doit commencer par \"{startsWith}\"",
+                "url": "Invalide {validation}",
+                "uuid": "Invalide {validation}"
+            },
+            "invalid_type": "Attendu {expected}, reçu {received}",
+            "invalid_type_received_undefined": "Requis",
+            "invalid_union": "Entrée invalide",
+            "invalid_union_discriminator": "Valeur de discriminant invalide. Attendu {- options}",
+            "not_finite": "Le nombre doit être fini",
+            "not_multiple_of": "Le nombre doit être un multiple de {multipleOf}",
+            "too_big": {
+                "array": {
+                    "exact": "Le tableau doit contenir exactement {maximum} élément(s)",
+                    "inclusive": "Le tableau doit contenir au maximum {maximum} élément(s)",
+                    "not_inclusive": "Le tableau doit contenir moins de {maximum} élément(s)"
+                },
+                "date": {
+                    "exact": "La date doit être exactement {- maximum, datetime}",
+                    "inclusive": "La date doit être inférieure ou égale à {- maximum, datetime}",
+                    "not_inclusive": "La date doit être inférieure à {- maximum, datetime}"
+                },
+                "number": {
+                    "exact": "Le nombre doit être exactement {maximum}",
+                    "inclusive": "Le nombre doit être inférieur ou égal à {maximum}",
+                    "not_inclusive": "Le nombre doit être inférieur à {maximum}"
+                },
+                "set": {
+                    "exact": "Entrée invalide",
+                    "inclusive": "Entrée invalide",
+                    "not_inclusive": "Entrée invalide"
+                },
+                "string": {
+                    "exact": "La chaîne doit contenir exactement {maximum} caractère(s)",
+                    "inclusive": "La chaîne doit contenir au maximum {maximum} caractère(s)",
+                    "not_inclusive": "La chaîne doit contenir moins de {maximum} caractère(s)"
+                }
+            },
+            "too_small": {
+                "array": {
+                    "exact": "Le tableau doit contenir exactement {minimum} élément(s)",
+                    "inclusive": "Le tableau doit contenir au moins {minimum} élément(s)",
+                    "not_inclusive": "Le tableau doit contenir plus de {minimum} élément(s)"
+                },
+                "date": {
+                    "exact": "La date doit être exactement {- minimum, datetime}",
+                    "inclusive": "La date doit être supérieure ou égale à {- minimum, datetime}",
+                    "not_inclusive": "La date doit être supérieure à {- minimum, datetime}"
+                },
+                "number": {
+                    "exact": "Le nombre doit être exactement {minimum}",
+                    "inclusive": "Le nombre doit être supérieur ou égal à {minimum}",
+                    "not_inclusive": "Le nombre doit être supérieur à {minimum}"
+                },
+                "set": {
+                    "exact": "Entrée invalide",
+                    "inclusive": "Entrée invalide",
+                    "not_inclusive": "Entrée invalide"
+                },
+                "string": {
+                    "exact": "La chaîne doit contenir exactement {minimum} caractère(s)",
+                    "inclusive": "La chaîne doit contenir au moins {minimum} caractère(s)",
+                    "not_inclusive": "La chaîne doit contenir plus de {minimum} caractère(s)"
+                }
+            },
+            "unrecognized_keys": "Clé(s) non reconnue(s) dans l'objet : {- keys}"
+        },
+        "types": {
+            "array": "tableau",
+            "bigint": "bigint",
+            "boolean": "booléen",
+            "date": "date",
+            "float": "flottant",
+            "function": "fonction",
+            "integer": "entier",
+            "map": "carte",
+            "nan": "nan",
+            "never": "jamais",
+            "null": "nul",
+            "number": "nombre",
+            "object": "objet",
+            "promise": "promesse",
+            "set": "ensemble",
+            "string": "chaîne",
+            "symbol": "symbole",
+            "undefined": "indéfini",
+            "unknown": "inconnu",
+            "void": "vide"
+        },
+        "validations": {
+            "cuid": "cuid",
+            "cuid2": "cuid2",
+            "datetime": "date-heure",
+            "email": "email",
+            "emoji": "emoji",
+            "ip": "ip",
+            "regex": "regex",
+            "ulid": "ulid",
+            "url": "url",
+            "uuid": "uuid"
+        }
+    },
+    "choosePlan": {
+        "title": "Choisissez votre plan",
+        "description": "Pour continuer, veuillez sélectionner un plan."
+    }
+}

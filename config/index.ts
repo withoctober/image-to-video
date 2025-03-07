@@ -16,6 +16,38 @@ export const config = {
 				currency: "USD",
 				label: "Deutsch",
 			},
+			zh: {
+				currency: "USD",
+				label: "简体中文",
+			},
+			it: {
+				currency: "USD",
+				label: "Italiano",
+			},
+			ru: {
+				currency: "USD",
+				label: "Русский",
+			},
+			ja: {
+				currency: "USD",
+				label: "日本語",
+			},
+			es: {
+				currency: "USD",
+				label: "Español",
+			},
+			fr: {
+				currency: "USD",
+				label: "Français",
+			},
+			tw: {
+				currency: "USD",
+				label: "繁體中文",
+			},
+			ko: {
+				currency: "USD",
+				label: "한국어",
+			},
 		},
 		// The default locale is used if no locale is provided
 		defaultLocale: "en",
@@ -23,6 +55,18 @@ export const config = {
 		defaultCurrency: "USD",
 		// The name of the cookie that is used to determine the locale
 		localeCookieName: "NEXT_LOCALE",
+		// The hrefLangs are used to determine the locale of the user
+		hrefLangs: {
+			de: "de-DE",
+			zh: "zh-Hans-CN",
+			it: "it-IT",
+			ru: "ru-RU",
+			ja: "ja-JP",
+			es: "es-ES",
+			fr: "fr-FR",
+			tw: "zh-Hant-TW",
+			ko: "ko-KR",
+		},
 	},
 	// Organizations
 	organizations: {
@@ -79,7 +123,7 @@ export const config = {
 	// Frontend
 	ui: {
 		// the themes that should be available in the app
-		enabledThemes: ["light", "dark"],
+		enabledThemes: ["light"],
 		// the default theme
 		defaultTheme: "light",
 		// the saas part of the application

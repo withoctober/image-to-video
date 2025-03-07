@@ -5,6 +5,7 @@ export type Config = {
 		defaultLocale: string;
 		defaultCurrency: string;
 		localeCookieName: string;
+		hrefLangs: { [locale: string]: string };
 	};
 	organizations: {
 		enable: boolean;
