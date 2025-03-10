@@ -773,5 +773,34 @@
 	"choosePlan": {
 		"title": "Choose your plan",
 		"description": "To continue, please select a plan."
+	},
+	"generator": {
+		"title": "Generator",
+		"image": "Image",
+		"uploadImage": "Upload Image",
+		"imageUrl": "Image URL",
+		"uploadTips": "Select or drag the image",
+		"imageUrlTips": "Enter the image URL",
+		"loadImageButton": "Load Image",
+		"prompt": "Prompt",
+		"outputLanguage": "Output Language",
+		"outputLanguageTips": "The major models currently offer the most friendly support for English Prompt.",
+		"previewVideo": "Preview Video",
+		"copy": "Copy",
+		"copySuccess": "Description copied successfully",
+		"copyError": "Failed to copy description",
+		"generateError": "Failed to generate description, please try again.",
+		"generateSuccess": "Description generated successfully",
+		"generateTips": "The description will be displayed in the output box after the generation is complete.",
+		"generateButton": "Generate description",
+		"imageNotUploaded": "Please upload an image first",
+		"loadImageError": "Failed to load image, please try again.",
+		"maxUsage": "You have reached the maximum number of credits"
+	},
+	"main": {
+		"hero": {
+			"title": "Online Image to Video AI Generator",
+			"description": "Generate a video from an image with AI. It's easy and fast. Just upload an image and wait for the video to be generated. It's that simple."
+		}
 	}
 }
