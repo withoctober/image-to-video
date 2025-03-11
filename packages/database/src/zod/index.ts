@@ -76,6 +76,8 @@ export const PurchaseScalarFieldEnumSchema = z.enum(['id','organizationId','user
 
 export const AiChatScalarFieldEnumSchema = z.enum(['id','organizationId','userId','title','messages','createdAt','updatedAt']);
 
+export const TaskScalarFieldEnumSchema = z.enum(['id','userId','clientIp','userAgent','prompt','model','image','createdAt','updatedAt']);
+
 export const SortOrderSchema = z.enum(['asc','desc']);
 
 export const NullableJsonNullValueInputSchema = z.enum(['DbNull','JsonNull',]).transform((value) => value === 'JsonNull' ? Prisma.JsonNull : value === 'DbNull' ? Prisma.DbNull : value);
@@ -277,3 +279,21 @@ export const AiChatSchema = z.object({
 })
 
 export type AiChat = z.infer<typeof AiChatSchema>
+
+/////////////////////////////////////////
+// TASK SCHEMA
+/////////////////////////////////////////
+
+export const TaskSchema = z.object({
+  id: z.string().cuid(),
+  userId: z.string().nullable(),
+  clientIp: z.string().nullable(),
+  userAgent: z.string().nullable(),
+  prompt: z.string(),
+  model: z.string(),
+  image: z.string().nullable(),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
+})
+
+export type Task = z.infer<typeof TaskSchema>

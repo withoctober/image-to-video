@@ -4,24 +4,17 @@ import type React from "react";
 
 import { useSession } from "@saas/auth/hooks/use-session";
 import { Button } from "@ui/components/button";
-import { Input } from "@ui/components/input";
-import { } from "@ui/components/select";
-import { Tabs, TabsList, TabsTrigger } from "@ui/components/tabs";
+import { } from "@ui/components/tabs";
 import { Textarea } from "@ui/components/textarea";
 import imageCompression from "browser-image-compression";
-import { Book, Copy, Download, Link2, Loader2, Trash2, Upload, Wand2, X } from "lucide-react";
+import { Download, Loader2, Trash2, Upload, Wand2, } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { usePathname } from "next/navigation";
 import { useRef, useState } from "react";
-import { toast } from "sonner";
-import Image from "next/image";
 
 export default function Generator() {
 	const [prompt, setPrompt] = useState("");
 	const [uploadedImage, setUploadedImage] = useState<string | null>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
-	const [imageUrl, setImageUrl] = useState<string | null>(null);
-	const [isLoadImageLoading, setIsLoadImageLoading] = useState(false);
 	const [isGenerateLoading, setIsGenerateLoading] = useState(false);
 	const [output, setOutput] = useState<{
 		url: string;
@@ -84,22 +77,6 @@ export default function Generator() {
 		}
 	};
 
-	const copyToClipboard = (text: string) => {
-		if (!text) {
-			toast.error("No text to copy");
-			return;
-		}
-		navigator.clipboard
-			.writeText(text)
-			.then(() => {
-				toast.success("Copied to clipboard");
-			})
-			.catch((err) => {
-				console.error("Failed to copy: ", err);
-				toast.error("Failed to copy");
-			});
-	};
-
 	const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];
 		if (file) {
@@ -111,58 +88,31 @@ export default function Generator() {
 		}
 	};
 
-	const [activeTab, setActiveTab] = useState("upload");
-
 	const triggerFileInput = () => {
 		if (fileInputRef.current) {
 			fileInputRef.current.click();
 		}
 	};
 
-	const clearImage = () => {
-		setUploadedImage(null);
-		if (fileInputRef.current) {
-			fileInputRef.current.value = "";
-		}
-	};
-
-	// 将url地址下载到本地，转为base64展示
-	const downloadImage = (url: string) => {
-		if (!url) {
-			toast.error("Please enter an image URL");
-			return;
-		}
-
-		setIsLoadImageLoading(true);
-		const img = new Image();
-		img.src = `/api/proxy?url=${url}`;
-		img.crossOrigin = "Anonymous";
-		img.onload = () => {
-			const canvas = document.createElement("canvas");
-			canvas.width = img.width;
-			canvas.height = img.height;
-			const ctx = canvas.getContext("2d");
-			if (ctx) {
-				ctx.drawImage(img, 0, 0);
-				const base64 = canvas.toDataURL("image/png");
-				setUploadedImage(base64);
-				setIsLoadImageLoading(false);
-			}
-		};
-		img.onerror = () => {
-			setIsLoadImageLoading(false);
-		};
-	};
-
-	const handleFeedback = (type: "satisfied" | "dissatisfied") => { };
-
-	const handleCloseFeedback = () => {
-		setIsFeedbackVisible(false);
-	};
-
-	const handleCloseLoginPopup = () => {
-		setIsLoginPopupOpen(false);
-	};
+	function ExampleVideo() {
+		return (
+			<div className="relative h-full w-full">
+				<img
+					src="/images/home/coastline.webp"
+					alt="CoastlinePhoto"
+					className="absolute top-0 left-0 w-[220px] lg:w-[350px] rounded-lg"
+				/>
+				<video
+					src="http://storage.imagevideo.org/examples/coastline.mp4"
+					controls
+					className="absolute bottom-0 right-0 w-[220px] lg:w-[350px] rounded-lg"
+					aria-label="CoastlineVideoPreview"
+				>
+					<track kind="captions" label="中文" srcLang="zh" src="/path/to/captions.vtt" />
+				</video>
+			</div>
+		)
+	}
 
 
 	return (
@@ -181,116 +131,42 @@ export default function Generator() {
 								{t("image")}
 							</h3>
 						</div>
-						<Tabs
-							value={activeTab}
-							onValueChange={setActiveTab}
-							className="w-full"
+						<div
+							className="flex h-[250px] cursor-pointer items-center justify-center rounded-lg border-2 border-dashed overflow-hidden bg-muted"
+							onClick={triggerFileInput}
+							onKeyDown={(e) => {
+								if (e.key === "Enter") {
+									triggerFileInput();
+								}
+							}}
 						>
-							<TabsList className="grid w-full grid-cols-2">
-								<TabsTrigger
-									value="upload"
-									className="flex items-center gap-2"
-								>
-									<Upload className="h-4 w-4" />
-									{t("uploadImage")}
-								</TabsTrigger>
-								<TabsTrigger
-									value="url"
-									className="flex items-center gap-2"
-								>
-									<Link2 className="h-4 w-4" />
-									{t("imageUrl")}
-								</TabsTrigger>
-							</TabsList>
-						</Tabs>
-
-						<div className="relative">
-							{activeTab === "upload" ? (
-								<div
-									className="flex h-[250px] cursor-pointer items-center justify-center rounded-lg border-2 border-dashed overflow-hidden bg-muted"
-									onClick={triggerFileInput}
-									onKeyDown={(e) => {
-										if (e.key === "Enter") {
-											triggerFileInput();
+							{uploadedImage ? (
+								<div className="w-full h-full flex items-center justify-center">
+									<img
+										src={
+											uploadedImage ||
+											"/placeholder.svg"
 										}
-									}}
-								>
-									{uploadedImage ? (
-										<div className="w-full h-full flex items-center justify-center">
-											<img
-												src={
-													uploadedImage ||
-													"/placeholder.svg"
-												}
-												alt="Uploaded"
-												className="max-w-full max-h-full object-contain"
-											/>
-										</div>
-									) : (
-										<div className="flex flex-col items-center gap-2 text-center">
-											<Upload className="h-8 w-8 text-muted-foreground" />
-											<p className="text-sm text-muted-foreground">
-												{t("uploadTips")}
-											</p>
-										</div>
-									)}
-									<input
-										type="file"
-										ref={fileInputRef}
-										className="hidden"
-										accept="image/*"
-										onChange={handleFileUpload}
+										alt="Uploaded"
+										className="max-w-full max-h-full object-contain"
 									/>
 								</div>
 							) : (
-								<div className="flex h-[250px] cursor-pointer items-center justify-center rounded-lg border-2 border-dashed overflow-hidden bg-muted">
-									{uploadedImage ? (
-										<img
-											src={
-												uploadedImage || "/placeholder.svg"
-											}
-											alt="Loaded from URL"
-											className="max-w-full max-h-full object-contain"
-										/>
-									) : (
-										<div className="w-full flex flex-col justify-center items-center p-4">
-											<Input
-												className="text-sm"
-												type="url"
-												placeholder={t("imageUrlTips")}
-												value={imageUrl || ""}
-												onChange={(e) =>
-													setImageUrl(e.target.value)
-												}
-											/>
-											<Button
-												className="mt-4"
-												onClick={() =>
-													downloadImage(imageUrl || "")
-												}
-											>
-												{isLoadImageLoading && (
-													<Loader2 className="h-4 w-4 animate-spin" />
-												)}
-												{t("loadImageButton")}
-											</Button>
-										</div>
-									)}
+								<div className="flex flex-col items-center gap-2 text-center">
+									<Upload className="h-8 w-8 text-muted-foreground" />
+									<p className="text-sm text-muted-foreground">
+										{t("uploadTips")}
+									</p>
 								</div>
 							)}
-
-							{uploadedImage && (
-								<Button
-									variant="outline"
-									size="icon"
-									className="absolute top-2 right-2 h-8 w-8"
-									onClick={clearImage}
-								>
-									<X className="h-4 w-4" />
-								</Button>
-							)}
+							<input
+								type="file"
+								ref={fileInputRef}
+								className="hidden"
+								accept="image/*"
+								onChange={handleFileUpload}
+							/>
 						</div>
-
 						<div className="space-y-4">
 							<div className="space-y-2">
 								<h3 className="text-lg font-medium flex justify-start">
@@ -344,7 +220,7 @@ export default function Generator() {
 						</div>
 					</div>
 					<div className="col-span-1 flex lg:block w-full items-center justify-center">
-						<div className="w-[1px] h-full border-r border-dashed border-gray-200 hidden md:block mx-auto"></div>
+						<div className="w-[1px] h-full border-r border-dashed border-gray-200 hidden md:block mx-auto" />
 					</div>
 					<div className="space-y-4 col-span-5">
 						<div className="space-y-2 flex flex-start">
@@ -354,10 +230,7 @@ export default function Generator() {
 						</div>
 						<div className="mt-8 lg:mt-16 relative h-[250px] lg:h-[350px]">
 							{!output ? (
-								<>
-									<img src="/images/home/coastline.webp" alt="Coastline Image" className="absolute top-0 left-0 w-[220px] lg:w-[350px] rounded-lg" />
-									<video src="http://storage.imagevideo.org/examples/coastline.mp4" controls className="absolute bottom-0 right-0 w-[220px] lg:w-[350px] rounded-lg" />
-								</>
+								<ExampleVideo />
 							) : (
 								<div className="flex justify-center items-center h-full">
 									<p className="text-muted-foreground">暂无预览</p>
@@ -370,7 +243,7 @@ export default function Generator() {
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
+			</div >
+		</div >
 	);
 }

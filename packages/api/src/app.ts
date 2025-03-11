@@ -1,5 +1,10 @@
 import { auth } from "@repo/auth";
-import { getBaseUrl } from "@repo/utils";
+import {
+	BadRequestResponse,
+	BizException,
+	ServerErrorResponse,
+	getBaseUrl,
+} from "@repo/utils";
 import { apiReference } from "@scalar/hono-api-reference";
 import { Hono } from "hono";
 import { openAPISpecs } from "hono-openapi";
@@ -16,6 +21,7 @@ import { healthRouter } from "./routes/health";
 import { newsletterRouter } from "./routes/newsletter";
 import { organizationsRouter } from "./routes/organizations/router";
 import { paymentsRouter } from "./routes/payments/router";
+import { taskRouter } from "./routes/task";
 import { uploadsRouter } from "./routes/uploads";
 import { webhooksRouter } from "./routes/webhooks";
 
@@ -23,6 +29,21 @@ export const app = new Hono().basePath("/api");
 
 app.use(loggerMiddleware);
 app.use(corsMiddleware);
+
+app.onError((err, c) => {
+	console.log("onError======");
+	console.error(err);
+	if (err instanceof BizException) {
+		const bizException = err as BizException;
+		if (bizException.code === 400) {
+			return c.json(BadRequestResponse(bizException.message), 200);
+		}
+		if (bizException.code === 500) {
+			return c.json(ServerErrorResponse(bizException.message), 200);
+		}
+	}
+	return c.json(ServerErrorResponse("Internal server error"), 200);
+});
 
 const appRouter = app
 	.route("/", authRouter)
@@ -34,7 +55,8 @@ const appRouter = app
 	.route("/", newsletterRouter)
 	.route("/", organizationsRouter)
 	.route("/", adminRouter)
-	.route("/", healthRouter);
+	.route("/", healthRouter)
+	.route("/", taskRouter);
 
 app.get(
 	"/app-openapi",

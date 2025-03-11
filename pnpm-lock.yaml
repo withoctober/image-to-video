@@ -325,9 +325,15 @@ importers:
       '@ai-sdk/react':
         specifier: ^1.1.18
         version: 1.1.21(react@19.0.0)(zod@3.24.2)
+      '@repo/utils':
+        specifier: workspace:*
+        version: link:../utils
       ai:
         specifier: ^4.1.46
         version: 4.1.54(react@19.0.0)(zod@3.24.2)
+      axios:
+        specifier: ^1.7.7
+        version: 1.8.2(debug@4.4.0)
       openai:
         specifier: ^4.85.4
         version: 4.86.2(encoding@0.1.13)(zod@3.24.2)
@@ -5440,7 +5446,6 @@ packages:
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
-    dev: true
 
   /bail@2.0.2:
     resolution: {integrity: sha512-0xO6mYd7JB2YesxDKplafRpsiOzPt9V02ddPCLbY1xYGPOX24NTyN50qnUxgCPcSoYMhKpAuBTjQoRZCAkUDRw==}
@@ -6311,7 +6316,6 @@ packages:
         optional: true
     dependencies:
       debug: 4.4.0
-    dev: true
 
   /for-in@1.0.2:
     resolution: {integrity: sha512-7EwmXrOjyL+ChxMhmG5lnW9MPt1aIeZEwKhQzoBUdTV0N3zuwWDZYVJatDvZ2OyzPUvdIAZDsCetk3coyMfcnQ==}
@@ -8513,7 +8517,6 @@ packages:
 
   /proxy-from-env@1.1.0:
     resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
-    dev: true
 
   /ps-tree@1.2.0:
     resolution: {integrity: sha512-0VnamPPYHl4uaU/nSFeZZpR21QAWRz+sRv4iW9+v/GS/J5U5iZB5BNN6J0RMoOvdx2gWM2+ZFMIm58q24e4UYA==}

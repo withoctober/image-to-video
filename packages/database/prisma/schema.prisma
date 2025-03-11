@@ -194,4 +194,23 @@ model AiChat {
   messages       Json?
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
+
+  @@map("ai_chat")
+}
+
+
+model Task {
+  id        String @id @default(cuid())
+  userId    String?
+  clientIp  String?
+  userAgent String?
+
+  prompt    String
+  model     String
+  image     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("task")
 }
