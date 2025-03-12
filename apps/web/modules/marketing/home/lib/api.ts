@@ -40,13 +40,14 @@ export const useContactFormMutation = () => {
 	});
 };
 
-
 export const useTaskGenerateMutationKey = ["task-generate"] as const;
 export const useTaskGenerateMutation = () => {
 	return useMutation({
 		mutationKey: useTaskGenerateMutationKey,
 		mutationFn: async (
-			form: InferRequestType<typeof apiClient.task.generate.$post>["json"],
+			form: InferRequestType<
+				typeof apiClient.task.generate.$post
+			>["json"],
 		) => {
 			const response = await apiClient.task.generate.$post({
 				json: form,
@@ -65,9 +66,8 @@ export const useTaskGenerateMutation = () => {
 	});
 };
 
-
 export const useTaskQueryKey = ["task-query"] as const;
-export const useTaskQuery = (id: string) => {
+export const useTaskQuery = (id: string, enabled: boolean) => {
 	return useQuery({
 		queryKey: useTaskQueryKey,
 		queryFn: async () => {
@@ -89,7 +89,8 @@ export const useTaskQuery = (id: string) => {
 			return data.data;
 		},
 		refetchInterval: 5000,
-    	refetchIntervalInBackground: false,
-    	retry: 30,
+		refetchIntervalInBackground: false,
+		retry: 30,
+		enabled: !!id && enabled,
 	});
 };

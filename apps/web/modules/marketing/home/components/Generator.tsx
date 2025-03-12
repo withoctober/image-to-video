@@ -2,20 +2,21 @@
 
 import type React from "react";
 
+import { useTaskGenerateMutation, useTaskQuery } from "@marketing/home/lib/api";
 import { useSession } from "@saas/auth/hooks/use-session";
 import { Button } from "@ui/components/button";
 import { } from "@ui/components/tabs";
 import { Textarea } from "@ui/components/textarea";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@ui/components/tooltip";
 import imageCompression from "browser-image-compression";
 import { Download, Loader2, Share, Trash2, Upload, Wand2, } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@ui/components/tooltip";
-import { useTaskGenerateMutation, useTaskQuery } from "@marketing/home/lib/api";
 
 export default function Generator() {
 	const [prompt, setPrompt] = useState("");
+	const [isEnabledPromptOptimizer, setIsEnabledPromptOptimizer] = useState(true);
 	const [uploadedImage, setUploadedImage] = useState<string | null>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [isGenerateLoading, setIsGenerateLoading] = useState(false);
@@ -26,6 +27,8 @@ export default function Generator() {
 		taskId: string;
 		progress: number;
 	} | null>(null);
+
+
 	const { user, reloadSession } = useSession();
 
 	const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
@@ -93,6 +96,15 @@ export default function Generator() {
 		}
 	};
 
+	const handleFileDrop = async (e: React.DragEvent<HTMLDivElement>) => {
+		e.preventDefault();
+		const file = e.dataTransfer.files[0];
+		if (file) {
+			const base64 = await fileToBase64(file);
+			setUploadedImage(base64);
+		}
+	}
+
 
 	const triggerFileInput = () => {
 		if (fileInputRef.current) {
@@ -100,12 +112,38 @@ export default function Generator() {
 		}
 	};
 
-	const { data: taskData, isLoading: isTaskLoading, isError: isTaskError, refetch: refetchTask } = useTaskQuery(output?.taskId || "");
+	const handlePromptOptimizer = async () => {
+		toast.success(!isEnabledPromptOptimizer ? t("openPromptOptimizer") : t("closePromptOptimizer"));
+		await setIsEnabledPromptOptimizer(!isEnabledPromptOptimizer);
+	}
+
+	const handleClearAll = () => {
+		setPrompt("");
+	}
+
+	const handleDownloadVideo = () => {
+		if (output?.videoUrl) {
+			window.open(output.videoUrl, "_blank");
+		}
+	}
+
+	const handleShareVideo = () => {
+		if (output?.videoUrl) {
+			navigator.clipboard.writeText(output.videoUrl);
+			toast.success(t("shareVideoTips"));
+		}
+	}
+
+
+
+	const { data: taskData, isLoading: isTaskLoading, isError: isTaskError, refetch: refetchTask } = useTaskQuery(output?.taskId || "", !output?.videoUrl);
 
 	useEffect(() => {
 		if (taskData?.status === "SUCCESS") {
 			setOutput(prev => {
-				if (!prev) return prev;
+				if (!prev) {
+					return prev;
+				}
 				return {
 					...prev,
 					videoUrl: taskData.videoUrl || undefined,
@@ -119,12 +157,12 @@ export default function Generator() {
 	const taskGenerateMutation = useTaskGenerateMutation();
 	const handleGenerate = async () => {
 		if (!prompt) {
-			toast.error("请输入提示词");
+			toast.error(t("promptNotInput"));
 			return;
 		}
 
 		if (!uploadedImage) {
-			toast.error("请上传图片");
+			toast.error(t("imageNotUploaded"));
 			return;
 		}
 
@@ -151,49 +189,7 @@ export default function Generator() {
 		} finally {
 			setIsSubmitLoading(false);
 		}
-
-
-		// setOutput({
-		// 	imageUrl: "/images/home/coastline.webp",
-		// 	taskId: "task-" + Date.now(),
-		// 	progress: 0,
-		// });
-
-		// // Simulate progress updates
-		// const progressInterval = setInterval(() => {
-		// 	setOutput((prev) => {
-		// 		if (!prev) return prev;
-
-		// 		const newProgress = Math.min(prev.progress + 10, 100);
-
-		// 		// When progress reaches 100%, clear the interval and set loading to false
-		// 		if (newProgress >= 100) {
-		// 			clearInterval(progressInterval);
-		// 			setOutput((prev) => {
-		// 				if (!prev) return prev;
-
-		// 				return {
-		// 					...prev,
-		// 					progress: 100,
-		// 					videoUrl: "http://storage.imagevideo.org/examples/coastline.mp4",
-		// 				};
-		// 			});
-		// 			setTimeout(() => {
-		// 				setIsGenerateLoading(false);
-		// 			}, 500);
-		// 		}
-
-		// 		return {
-		// 			...prev,
-		// 			progress: newProgress,
-		// 		};
-		// 	});
-		// }, 1000);
-
-		// // Cleanup interval on component unmount
-		// return () => clearInterval(progressInterval);
 	}
-
 	const ExampleVideo = useCallback(() => (
 		<div className="relative h-full w-full">
 			<img
@@ -202,7 +198,7 @@ export default function Generator() {
 				className="absolute top-0 left-0 w-[220px] lg:w-[350px] rounded-lg"
 			/>
 			<video
-				src="http://storage.imagevideo.org/examples/coastline.mp4"
+				src="/images/home/coastline.mp4"
 				controls
 				className="absolute bottom-0 right-0 w-[220px] lg:w-[350px] rounded-lg"
 				aria-label="CoastlineVideoPreview"
@@ -212,18 +208,18 @@ export default function Generator() {
 		</div>
 	), []);
 
-	const PrviewVideo = useCallback(() => (
+	const PreviewVideo = useCallback(() => (
 		<div className="flex flex-col justify-start items-center h-full">
 			<div className="h-[250px] lg:h-[350px] rounded-lg relative">
 				{
 					output?.videoUrl ? (
 						<video
-							src="http://storage.imagevideo.org/examples/coastline.mp4"
+							src={output?.videoUrl}
 							controls
 							aria-label="CoastlineVideoPreview"
-							className="w-full rounded-lg"
+							className="w-full rounded-lg h-[250px] lg:h-[350px]"
 						>
-							<track kind="captions" label="中文" srcLang="zh" src="/path/to/captions.vtt" />
+							<track kind="captions" srcLang="en" src="/path/to/captions.vtt" />
 						</video>
 					) : (
 						<div className="relative bg-muted rounded-lg h-[250px] lg:h-[350px]">
@@ -231,7 +227,7 @@ export default function Generator() {
 							{isGenerateLoading && (
 								<div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 rounded-lg">
 									<Loader2 className="h-10 w-10 text-white animate-spin mb-2" />
-									<div className="text-white text-sm font-medium">生成中 {output?.progress || 0}%</div>
+									<div className="text-white text-sm font-medium">{t("generatingTips")}</div>
 								</div>
 							)}
 						</div>
@@ -241,13 +237,13 @@ export default function Generator() {
 			{
 				output?.videoUrl && (
 					<div className="w-full flex items-center justify-center gap-2 mt-8">
-						<Button variant="outline" size="sm" className="w-48 mt-2">
+						<Button variant="outline" size="sm" className="w-48 mt-2" onClick={handleDownloadVideo}>
 							<Download className="h-4 w-4" />
-							下载视频
+							{t("downloadVideoButton")}
 						</Button>
-						<Button variant="outline" size="sm" className="w-48 mt-2">
+						<Button variant="outline" size="sm" className="w-48 mt-2" onClick={handleShareVideo}>
 							<Share className="h-4 w-4" />
-							分享视频
+							{t("shareVideoButton")}
 						</Button>
 					</div>
 				)
@@ -256,7 +252,7 @@ export default function Generator() {
 	), [output, isGenerateLoading]);
 
 	return (
-		<div className="max-w-7xl mx-auto min-h-[1200px] lg:min-h-[800px]">
+		<section className="max-w-7xl mx-auto min-h-[1200px] lg:min-h-[800px] lg:mt-10 lg:pt-30" id="generator">
 			<div className="rounded-lg border bg-card p-6 shadow-sm">
 				<div className="space-y-2 flex flex-start">
 					<h2 className="text-xl font-bold">
@@ -279,6 +275,8 @@ export default function Generator() {
 									triggerFileInput();
 								}
 							}}
+							onDragOver={(e) => e.preventDefault()}
+							onDrop={handleFileDrop}
 						>
 							{uploadedImage ? (
 								<div className="w-full h-full flex items-center justify-center">
@@ -329,12 +327,13 @@ export default function Generator() {
 																variant="ghost"
 																size="sm"
 																className="flex items-center gap-1 text-primary px-2 "
+																onClick={handlePromptOptimizer}
 															>
-																<Wand2 className="h-4 w-4" />
+																<Wand2 className="h-4 w-4" style={{ color: isEnabledPromptOptimizer ? "var(--primary)" : "var(--muted-foreground)" }} />
 															</Button>
 														</TooltipTrigger>
-														<TooltipContent>
-															<p>Add to library</p>
+														<TooltipContent className="max-w-[400px]">
+															<p>{t("promptOptimizerTips")}</p>
 														</TooltipContent>
 													</Tooltip>
 												</TooltipProvider>
@@ -346,12 +345,13 @@ export default function Generator() {
 																variant="ghost"
 																size="sm"
 																className="flex items-center gap-1 text-primary px-2"
+																onClick={handleClearAll}
 															>
-																<Trash2 className="h-4 w-4" />
+																<Trash2 className="h-4 w-4 text-gray-500" />
 															</Button>
 														</TooltipTrigger>
-														<TooltipContent>
-															<p>Add to library</p>
+														<TooltipContent >
+															<p>{t("clearAllTips")}</p>
 														</TooltipContent>
 													</Tooltip>
 												</TooltipProvider>
@@ -394,12 +394,12 @@ export default function Generator() {
 							{!output ? (
 								<ExampleVideo />
 							) : (
-								<PrviewVideo />
+								<PreviewVideo />
 							)}
 						</div>
 					</div>
 				</div>
 			</div >
-		</div >
+		</section>
 	);
 }

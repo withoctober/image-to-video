@@ -1,4 +1,4 @@
-import { generateVideo } from "@repo/ai";
+import { generateVideo, retrieveVideo } from "@repo/ai";
 import { db } from "@repo/database";
 import { uploadFile } from "@repo/storage";
 import { BadRequestResponse, SuccessResponse } from "@repo/utils";
@@ -6,91 +6,127 @@ import { Hono } from "hono";
 import { validator } from "hono-openapi/zod";
 import { z } from "zod";
 
-export const taskRouter = new Hono().basePath("/task").post(
-	"generate",
-	validator(
-		"json",
-		z.object({
-			prompt: z.string(),
-			image: z.string().optional(),
-			type: z.enum(["image-to-video", "text-to-video"]),
-			promptOptimizer: z.boolean().optional(),
-		}),
-	),
-	async (c) => {
-		const { prompt, image, type, promptOptimizer } = c.req.valid("json");
+export const taskRouter = new Hono()
+	.basePath("/task")
+	.post(
+		"generate",
+		validator(
+			"json",
+			z.object({
+				prompt: z.string(),
+				image: z.string().optional(),
+				type: z.enum(["image-to-video", "text-to-video"]),
+				promptOptimizer: z.boolean().optional(),
+			}),
+		),
+		async (c) => {
+			const { prompt, image, type, promptOptimizer } =
+				c.req.valid("json");
 
-		if (type === "image-to-video" && !image) {
-			return c.json(BadRequestResponse("image is required"));
-		}
-		const task = await db.task.create({
-			data: {
+			if (type === "image-to-video" && !image) {
+				return c.json(BadRequestResponse("image is required"));
+			}
+			const task = await db.task.create({
+				data: {
+					prompt,
+					model: "I2V-01-live",
+					type,
+					status: "PREPARING",
+				},
+			});
+
+			// 上传图片到s3
+			// 将base64转为图片文件
+			const imageFile = base64ToBuffer(image || "");
+			const path = `images/task-${task.id}.png`;
+			await uploadFile(process.env.S3_BUCKET_NAME || "", path, imageFile);
+
+			const video = await generateVideo(
 				prompt,
-				model: "I2V-01-live",
-				type,
-				status: "PREPARING",
-			},
-		});
+				image || "",
+				promptOptimizer || true,
+			);
 
-		// 上传图片到s3
-		// 将base64转为图片文件
-		const imageFile = base64ToBuffer(image || "");
-		const path = `images/task-${task.id}.png`;
-		await uploadFile(process.env.S3_BUCKET_NAME || "", path, imageFile);
-
-		// const video = await generateVideo(prompt, image || "", promptOptimizer || true);
-
-		await db.task.update({
-			where: { id: task.id },
-			data: {
-				// upstreamTaskId: video?.taskId,
-				image: process.env.S3_PUBLIC_ENDPOINT + "/" + path,
-				status: "PREPARING",
-			},
-		});
-
-		return c.json(SuccessResponse({
-			taskId: task.id,
-			status: "PREPARING",
-			imageUrl: process.env.S3_PUBLIC_ENDPOINT + "/" + path,
-		}));
-	},
-).post("/callback", async (c) => {
-	const body = await c.req.json();
-	console.log(body);
-	if (body?.challenge) {
-		return c.json({
-			challenge: body.challenge,
-		});
-	}
-	if (body?.task_id) {
-		if (body?.status === "Processing") {
 			await db.task.update({
-				where: { id: body.task_id },
-				data: { status: "PROCESSING" },
+				where: { id: task.id },
+				data: {
+					upstreamTaskId: String(video?.task_id),
+					image: `${process.env.S3_PUBLIC_ENDPOINT}/${path}`,
+					status: "PREPARING",
+				},
 			});
-		} else if (body?.status === "Failed") {
-			await db.task.update({
-				where: { id: body.task_id },
-				data: { status: "FAIL" },
+
+			return c.json(
+				SuccessResponse({
+					taskId: task.id,
+					status: "PREPARING",
+					imageUrl: `${process.env.S3_PUBLIC_ENDPOINT}/${path}`,
+				}),
+			);
+		},
+	)
+	.post("/callback", async (c) => {
+		const body = await c.req.json();
+		console.log(body);
+		if (body?.challenge) {
+			return c.json({
+				challenge: body.challenge,
 			});
-		} else if (body?.status === "Success") {
-			// 这里去获取视频下载链接
 		}
-	}
-})
-.get("/:id", async (c) => {
-	const { id } = c.req.param();
-	const task = await db.task.findUnique({
-		where: { id },
+		if (body?.task_id) {
+			if (body?.status === "processing") {
+				await db.task.updateMany({
+					where: { upstreamTaskId: String(body.task_id) },
+					data: { status: "PROCESSING" },
+				});
+			} else if (body?.status === "fail") {
+				await db.task.updateMany({
+					where: { upstreamTaskId: String(body.task_id) },
+					data: { status: "FAIL" },
+				});
+			} else if (body?.status === "success") {
+				// 先更新状态, 把file_id存入数据库
+				await db.task.updateMany({
+					where: { upstreamTaskId: String(body.task_id) },
+					data: { fileId: body.file_id },
+				});
+				// 获取视频下载链接
+				const video = await retrieveVideo(body.file_id);
+				// 将视频转存到s3
+				const videoFile = await downloadFile(video?.file?.download_url);
+				const videoPath = `videos/task-${body.task_id}.mp4`;
+				await uploadFile(
+					process.env.S3_BUCKET_NAME || "",
+					videoPath,
+					videoFile,
+				);
+				// 更新视频下载链接
+				await db.task.updateMany({
+					where: { upstreamTaskId: String(body.task_id) },
+					data: {
+						videoUrl: `${process.env.S3_PUBLIC_ENDPOINT}/${videoPath}`,
+						status: "SUCCESS",
+					},
+				});
+				console.log(
+					"id: ",
+					body.task_id,
+					"success: ",
+					`${process.env.S3_PUBLIC_ENDPOINT}/${videoPath}`,
+				);
+			}
+		}
+		return c.json(SuccessResponse("success"));
+	})
+	.get("/:id", async (c) => {
+		const { id } = c.req.param();
+		const task = await db.task.findUnique({
+			where: { id },
+		});
+		return c.json(SuccessResponse(task));
 	});
-	return c.json(SuccessResponse(task));
-});
-
-
 
 function base64ToBuffer(base64: string): Buffer {
-	const mimeType = "image/png";
 	const byteString = atob(base64.split(",")[1]);
 	const arrayBuffer = new ArrayBuffer(byteString.length);
 	const uintArray = new Uint8Array(arrayBuffer);
@@ -98,4 +134,10 @@ function base64ToBuffer(base64: string): Buffer {
 		uintArray[i] = byteString.charCodeAt(i);
 	}
 	return Buffer.from(uintArray);
+}
+
+async function downloadFile(url: string): Promise<Buffer> {
+	const response = await fetch(url);
+	const arrayBuffer = await response.arrayBuffer();
+	return Buffer.from(arrayBuffer);
 }

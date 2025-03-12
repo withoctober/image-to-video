@@ -16,7 +16,7 @@ export function Logo({
 		>
 			<Image src="/images/logo.png" alt="Logo" width={32} height={32} />
 			{withLabel && (
-				<span className="ml-3 hidden text-lg md:block">acme</span>
+				<span className="ml-3 hidden text-lg md:block">Image to Video AI</span>
 			)}
 		</span>
 	);

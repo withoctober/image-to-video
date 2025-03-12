@@ -34,99 +34,99 @@ export const featureTabs: Array<{
 		docsLink?: string;
 	}[];
 }> = [
-	{
-		id: "feature1",
-		title: "Feature 1",
-		icon: StarIcon,
-		subtitle: "Do more with our amazing SaaS.",
-		description:
-			"This is a brilliant feature. And below you can see some reasons why. This is basically just a dummy text.",
-		stack: [],
-		image: heroImage,
-		imageBorder: false,
-		highlights: [
-			{
-				title: "Benefit 1",
-				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
-				icon: WandIcon,
-			},
-			{
-				title: "Benefit 2",
-				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
-				icon: ComputerIcon,
-			},
-			{
-				title: "Benefit 3",
-				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
-				icon: MobileIcon,
-			},
-		],
-	},
-	{
-		id: "feature2",
-		title: "Feature 2",
-		icon: CloudIcon,
-		subtitle: "Your SaaS can also do this.",
-		description: "Another dummy text for another feature.",
-		stack: [],
-		image: heroImage,
-		imageBorder: false,
-		highlights: [
-			{
-				title: "Benefit 1",
-				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
-				icon: WandIcon,
-			},
-			{
-				title: "Benefit 2",
-				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
-				icon: ComputerIcon,
-			},
-			{
-				title: "Benefit 3",
-				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
-				icon: MobileIcon,
-			},
-		],
-	},
-	{
-		id: "feature3",
-		title: "Feature 3",
-		icon: PaperclipIcon,
-		subtitle: "We even got a third one.",
-		description:
-			"Of course your SaaS will have more features than this, but this is just a dummy text.",
-		stack: [],
-		image: heroImage,
-		imageBorder: false,
-		highlights: [
-			{
-				title: "Benefit 1",
-				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
-				icon: WandIcon,
-			},
-			{
-				title: "Benefit 2",
-				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
-				icon: ComputerIcon,
-			},
-			{
-				title: "Benefit 3",
-				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
-				icon: MobileIcon,
-			},
-		],
-	},
-];
+		{
+			id: "feature1",
+			title: "Feature 1",
+			icon: StarIcon,
+			subtitle: "Do more with our amazing SaaS.",
+			description:
+				"This is a brilliant feature. And below you can see some reasons why. This is basically just a dummy text.",
+			stack: [],
+			image: heroImage,
+			imageBorder: false,
+			highlights: [
+				{
+					title: "Benefit 1",
+					description:
+						"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
+					icon: WandIcon,
+				},
+				{
+					title: "Benefit 2",
+					description:
+						"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
+					icon: ComputerIcon,
+				},
+				{
+					title: "Benefit 3",
+					description:
+						"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
+					icon: MobileIcon,
+				},
+			],
+		},
+		{
+			id: "feature2",
+			title: "Feature 2",
+			icon: CloudIcon,
+			subtitle: "Your SaaS can also do this.",
+			description: "Another dummy text for another feature.",
+			stack: [],
+			image: heroImage,
+			imageBorder: false,
+			highlights: [
+				{
+					title: "Benefit 1",
+					description:
+						"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
+					icon: WandIcon,
+				},
+				{
+					title: "Benefit 2",
+					description:
+						"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
+					icon: ComputerIcon,
+				},
+				{
+					title: "Benefit 3",
+					description:
+						"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
+					icon: MobileIcon,
+				},
+			],
+		},
+		{
+			id: "feature3",
+			title: "Feature 3",
+			icon: PaperclipIcon,
+			subtitle: "We even got a third one.",
+			description:
+				"Of course your SaaS will have more features than this, but this is just a dummy text.",
+			stack: [],
+			image: heroImage,
+			imageBorder: false,
+			highlights: [
+				{
+					title: "Benefit 1",
+					description:
+						"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
+					icon: WandIcon,
+				},
+				{
+					title: "Benefit 2",
+					description:
+						"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
+					icon: ComputerIcon,
+				},
+				{
+					title: "Benefit 3",
+					description:
+						"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
+					icon: MobileIcon,
+				},
+			],
+		},
+	];
 
 export function Features() {
 	const [selectedTab, setSelectedTab] = useState(featureTabs[0].id);

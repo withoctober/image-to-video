@@ -783,6 +783,7 @@
 		"imageUrlTips": "Enter the image URL",
 		"loadImageButton": "Load Image",
 		"prompt": "Prompt",
+		"promptNotInput": "Please input prompt",
 		"outputLanguage": "Output Language",
 		"outputLanguageTips": "The major models currently offer the most friendly support for English Prompt.",
 		"previewVideo": "Preview Video",
@@ -795,12 +796,40 @@
 		"generateButton": "Generate description",
 		"imageNotUploaded": "Please upload an image first",
 		"loadImageError": "Failed to load image, please try again.",
-		"maxUsage": "You have reached the maximum number of credits"
+		"maxUsage": "You have reached the maximum number of credits",
+		"promptOptimizerTips": "When enabled, the model will automatically optimize your prompts to enhance generation quality. If you require more precise control, you can disable this feature, and the model will adhere more strictly to your instructions. In this case, it is recommended to provide more detailed prompts to achieve optimal results.",
+		"clearAllTips": "Clear prompt",
+		"openPromptOptimizer": "Opened prompt optimizer",
+		"closePromptOptimizer": "Closed prompt optimizer",
+		"downloadVideoButton": "Download Video",
+		"shareVideoButton": "Share Video",
+		"shareVideoTips": "Video link copied to clipboard",
+		"generatingTips": "Generating video, please wait..."
 	},
 	"main": {
+		"title": "Image to Video AI: Free Image to Video Generator",
+		"description": "Easy to use Image to Video AI online tools that effortlessly convert static images into dynamic videos.",
+		"subfixTitle": "Image to Video AI",
 		"hero": {
 			"title": "Online Image to Video AI Generator",
-			"description": "Generate a video from an image with AI. It's easy and fast. Just upload an image and wait for the video to be generated. It's that simple."
+			"description": "Explore top-tier Image to Video AI online tools that effortlessly convert static images into dynamic videos. Harness the power of advanced artificial intelligence to swiftly generate high-quality, professional-grade video content.",
+			"getStartedButton": "Get Started"
+		},
+		"howItWorks": {
+			"title": "How it works",
+			"subtitle": "Transforming Image to Video in 3 Simple Steps, Easy to Use",
+			"step1": {
+				"title": "Step 1: Upload Your Image",
+				"description": "Upload your image to the Image to Video Generator. The image will be used as the main subject of the video."
+			},
+			"step2": {
+				"title": "Step 2: Input Prompt",
+				"description": "Input your prompt to the Image to Video Generator. The prompt will be used to generate the video. Your can enabled the prompt optimizer to enhance the generation quality."
+			},
+			"step3": {
+				"title": "Step 3: Generate Video",
+				"description": "Click the generate button to generate the video. The video will be displayed in the output box after the generation is complete."
+			}
 		}
 	}
 }

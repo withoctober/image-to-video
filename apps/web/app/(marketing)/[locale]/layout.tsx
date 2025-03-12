@@ -6,7 +6,7 @@ import { Document } from "@shared/components/Document";
 import { I18nProvider as FumadocsI18nProvider } from "fumadocs-ui/i18n";
 import { RootProvider as FumadocsRootProvider } from "fumadocs-ui/provider";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages, setRequestLocale } from "next-intl/server";
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import type { PropsWithChildren } from "react";
 
@@ -15,6 +15,17 @@ const locales = Object.keys(config.i18n.locales);
 export function generateStaticParams() {
 	return locales.map((locale) => ({ locale }));
 }
+
+export async function generateMetadata() {
+	const t = await getTranslations("main");
+	return {
+		title: {
+			absolute: t("title"),
+			template: `%s | ${t("subfixTitle")}`,
+		},
+	};
+}
+
 
 export default async function MarketingLayout({
 	children,
