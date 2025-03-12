@@ -199,15 +199,32 @@ model AiChat {
 }
 
 
+enum TaskStatus {
+  PREPARING
+  QUEUEING
+  PROCESSING
+  SUCCESS
+  FAIL
+}
+
+
 model Task {
   id        String @id @default(cuid())
   userId    String?
   clientIp  String?
   userAgent String?
 
+  type      String
   prompt    String
   model     String
   image     String?
+  
+  status    TaskStatus
+
+  // 上游请求信息 
+  upstreamTaskId String? 
+  fileId         String?
+  videoUrl       String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

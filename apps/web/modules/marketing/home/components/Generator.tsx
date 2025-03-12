@@ -7,17 +7,22 @@ import { Button } from "@ui/components/button";
 import { } from "@ui/components/tabs";
 import { Textarea } from "@ui/components/textarea";
 import imageCompression from "browser-image-compression";
-import { Download, Loader2, Trash2, Upload, Wand2, } from "lucide-react";
+import { Download, Loader2, Share, Trash2, Upload, Wand2, } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { toast } from "sonner";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@ui/components/tooltip";
+import { useTaskGenerateMutation, useTaskQuery } from "@marketing/home/lib/api";
 
 export default function Generator() {
 	const [prompt, setPrompt] = useState("");
 	const [uploadedImage, setUploadedImage] = useState<string | null>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [isGenerateLoading, setIsGenerateLoading] = useState(false);
+	const [isSubmitLoading, setIsSubmitLoading] = useState(false);
 	const [output, setOutput] = useState<{
-		url: string;
+		imageUrl?: string;
+		videoUrl?: string;
 		taskId: string;
 		progress: number;
 	} | null>(null);
@@ -88,35 +93,170 @@ export default function Generator() {
 		}
 	};
 
+
 	const triggerFileInput = () => {
 		if (fileInputRef.current) {
 			fileInputRef.current.click();
 		}
 	};
 
-	function ExampleVideo() {
-		return (
-			<div className="relative h-full w-full">
-				<img
-					src="/images/home/coastline.webp"
-					alt="CoastlinePhoto"
-					className="absolute top-0 left-0 w-[220px] lg:w-[350px] rounded-lg"
-				/>
-				<video
-					src="http://storage.imagevideo.org/examples/coastline.mp4"
-					controls
-					className="absolute bottom-0 right-0 w-[220px] lg:w-[350px] rounded-lg"
-					aria-label="CoastlineVideoPreview"
-				>
-					<track kind="captions" label="中文" srcLang="zh" src="/path/to/captions.vtt" />
-				</video>
-			</div>
-		)
+	const { data: taskData, isLoading: isTaskLoading, isError: isTaskError, refetch: refetchTask } = useTaskQuery(output?.taskId || "");
+
+	useEffect(() => {
+		if (taskData?.status === "SUCCESS") {
+			setOutput(prev => {
+				if (!prev) return prev;
+				return {
+					...prev,
+					videoUrl: taskData.videoUrl || undefined,
+				};
+			});
+		}
+	}, [taskData]);
+
+
+
+	const taskGenerateMutation = useTaskGenerateMutation();
+	const handleGenerate = async () => {
+		if (!prompt) {
+			toast.error("请输入提示词");
+			return;
+		}
+
+		if (!uploadedImage) {
+			toast.error("请上传图片");
+			return;
+		}
+
+		setIsSubmitLoading(true);
+
+		try {
+			const res = await taskGenerateMutation.mutateAsync({
+				prompt,
+				image: uploadedImage,
+				type: "image-to-video",
+			});
+
+			setOutput({
+				taskId: res.taskId,
+				imageUrl: res.imageUrl,
+				progress: 0,
+			});
+			setIsGenerateLoading(true);
+
+
+		} catch (error: any) {
+			console.error(error);
+			toast.error(error.message);
+		} finally {
+			setIsSubmitLoading(false);
+		}
+
+
+		// setOutput({
+		// 	imageUrl: "/images/home/coastline.webp",
+		// 	taskId: "task-" + Date.now(),
+		// 	progress: 0,
+		// });
+
+		// // Simulate progress updates
+		// const progressInterval = setInterval(() => {
+		// 	setOutput((prev) => {
+		// 		if (!prev) return prev;
+
+		// 		const newProgress = Math.min(prev.progress + 10, 100);
+
+		// 		// When progress reaches 100%, clear the interval and set loading to false
+		// 		if (newProgress >= 100) {
+		// 			clearInterval(progressInterval);
+		// 			setOutput((prev) => {
+		// 				if (!prev) return prev;
+
+		// 				return {
+		// 					...prev,
+		// 					progress: 100,
+		// 					videoUrl: "http://storage.imagevideo.org/examples/coastline.mp4",
+		// 				};
+		// 			});
+		// 			setTimeout(() => {
+		// 				setIsGenerateLoading(false);
+		// 			}, 500);
+		// 		}
+
+		// 		return {
+		// 			...prev,
+		// 			progress: newProgress,
+		// 		};
+		// 	});
+		// }, 1000);
+
+		// // Cleanup interval on component unmount
+		// return () => clearInterval(progressInterval);
 	}
 
+	const ExampleVideo = useCallback(() => (
+		<div className="relative h-full w-full">
+			<img
+				src="/images/home/coastline.webp"
+				alt="CoastlinePhoto"
+				className="absolute top-0 left-0 w-[220px] lg:w-[350px] rounded-lg"
+			/>
+			<video
+				src="http://storage.imagevideo.org/examples/coastline.mp4"
+				controls
+				className="absolute bottom-0 right-0 w-[220px] lg:w-[350px] rounded-lg"
+				aria-label="CoastlineVideoPreview"
+			>
+				<track kind="captions" label="中文" srcLang="zh" src="/path/to/captions.vtt" />
+			</video>
+		</div>
+	), []);
+
+	const PrviewVideo = useCallback(() => (
+		<div className="flex flex-col justify-start items-center h-full">
+			<div className="h-[250px] lg:h-[350px] rounded-lg relative">
+				{
+					output?.videoUrl ? (
+						<video
+							src="http://storage.imagevideo.org/examples/coastline.mp4"
+							controls
+							aria-label="CoastlineVideoPreview"
+							className="w-full rounded-lg"
+						>
+							<track kind="captions" label="中文" srcLang="zh" src="/path/to/captions.vtt" />
+						</video>
+					) : (
+						<div className="relative bg-muted rounded-lg h-[250px] lg:h-[350px]">
+							<img src={output?.imageUrl || "/images/home/coastline.webp"} alt="GeneratedImage" className="w-full rounded-lg  h-[250px] lg:h-[350px]" />
+							{isGenerateLoading && (
+								<div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 rounded-lg">
+									<Loader2 className="h-10 w-10 text-white animate-spin mb-2" />
+									<div className="text-white text-sm font-medium">生成中 {output?.progress || 0}%</div>
+								</div>
+							)}
+						</div>
+					)
+				}
+			</div>
+			{
+				output?.videoUrl && (
+					<div className="w-full flex items-center justify-center gap-2 mt-8">
+						<Button variant="outline" size="sm" className="w-48 mt-2">
+							<Download className="h-4 w-4" />
+							下载视频
+						</Button>
+						<Button variant="outline" size="sm" className="w-48 mt-2">
+							<Share className="h-4 w-4" />
+							分享视频
+						</Button>
+					</div>
+				)
+			}
+		</div>
+	), [output, isGenerateLoading]);
 
 	return (
-		<div className="max-w-7xl mx-auto">
+		<div className="max-w-7xl mx-auto min-h-[1200px] lg:min-h-[800px]">
 			<div className="rounded-lg border bg-card p-6 shadow-sm">
 				<div className="space-y-2 flex flex-start">
 					<h2 className="text-xl font-bold">
@@ -181,19 +321,40 @@ export default function Generator() {
 									<div className="absolute bottom-1 w-full px-2">
 										<div className=" flex items-center justify-between bg-muted">
 											<div className="flex gap-1">
-												<Button
-													variant="ghost"
-													size="sm"
-													className="flex items-center gap-1 text-primary"
-												>
-													<Wand2 className="h-4 w-4" />
-													<span>AI Rewrite</span>
-												</Button>
 
-												<Button variant="ghost" size="sm" className="flex items-center gap-1 text-primary">
-													<Trash2 className="h-4 w-4" />
-													<span>Clear</span>
-												</Button>
+												<TooltipProvider delayDuration={30}>
+													<Tooltip>
+														<TooltipTrigger asChild>
+															<Button
+																variant="ghost"
+																size="sm"
+																className="flex items-center gap-1 text-primary px-2 "
+															>
+																<Wand2 className="h-4 w-4" />
+															</Button>
+														</TooltipTrigger>
+														<TooltipContent>
+															<p>Add to library</p>
+														</TooltipContent>
+													</Tooltip>
+												</TooltipProvider>
+
+												<TooltipProvider delayDuration={30}>
+													<Tooltip>
+														<TooltipTrigger asChild>
+															<Button
+																variant="ghost"
+																size="sm"
+																className="flex items-center gap-1 text-primary px-2"
+															>
+																<Trash2 className="h-4 w-4" />
+															</Button>
+														</TooltipTrigger>
+														<TooltipContent>
+															<p>Add to library</p>
+														</TooltipContent>
+													</Tooltip>
+												</TooltipProvider>
 											</div>
 											<div className="text-muted-foreground text-sm">
 												{prompt.length}/{500}
@@ -208,9 +369,10 @@ export default function Generator() {
 							)}
 							<Button
 								className="w-full h-8 primary text-white hover:primary"
-								disabled={isGenerateLoading}
+								disabled={isSubmitLoading}
+								onClick={handleGenerate}
 							>
-								{isGenerateLoading ? (
+								{isSubmitLoading ? (
 									<Loader2 className="mr-2 h-4 w-4 animate-spin" />
 								) : (
 									<Upload className="mr-2 h-4 w-4" />
@@ -222,23 +384,17 @@ export default function Generator() {
 					<div className="col-span-1 flex lg:block w-full items-center justify-center">
 						<div className="w-[1px] h-full border-r border-dashed border-gray-200 hidden md:block mx-auto" />
 					</div>
-					<div className="space-y-4 col-span-5">
+					<div className="space-y-4 col-span-5 mt-10 lg:mt-0 h-[400px]">
 						<div className="space-y-2 flex flex-start">
 							<h3 className="text-xl font-medium">
 								{t("previewVideo")}
 							</h3>
 						</div>
-						<div className="mt-8 lg:mt-16 relative h-[250px] lg:h-[350px]">
+						<div className="mt-6 lg:mt-16 relative h-[250px] lg:h-[350px]">
 							{!output ? (
 								<ExampleVideo />
 							) : (
-								<div className="flex justify-center items-center h-full">
-									<p className="text-muted-foreground">暂无预览</p>
-									<Button variant="outline" size="sm" className="w-full mt-2">
-										<Download className="h-4 w-4" />
-										下载视频
-									</Button>
-								</div>
+								<PrviewVideo />
 							)}
 						</div>
 					</div>

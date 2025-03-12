@@ -31,7 +31,6 @@ app.use(loggerMiddleware);
 app.use(corsMiddleware);
 
 app.onError((err, c) => {
-	console.log("onError======");
 	console.error(err);
 	if (err instanceof BizException) {
 		const bizException = err as BizException;

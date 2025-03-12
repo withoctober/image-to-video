@@ -1,5 +1,5 @@
 import { apiClient } from "@shared/lib/api-client";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type { InferRequestType } from "hono";
 
 export const newsletterSignupMutationKey = ["newsletter-signup"] as const;
@@ -37,5 +37,59 @@ export const useContactFormMutation = () => {
 				throw new Error("Failed to send contact form");
 			}
 		},
+	});
+};
+
+
+export const useTaskGenerateMutationKey = ["task-generate"] as const;
+export const useTaskGenerateMutation = () => {
+	return useMutation({
+		mutationKey: useTaskGenerateMutationKey,
+		mutationFn: async (
+			form: InferRequestType<typeof apiClient.task.generate.$post>["json"],
+		) => {
+			const response = await apiClient.task.generate.$post({
+				json: form,
+			});
+
+			if (!response.ok) {
+				throw new Error("Failed to generate task");
+			}
+
+			const data = await response.json();
+			if (data.code !== 200) {
+				throw new Error(data.message);
+			}
+			return data.data;
+		},
+	});
+};
+
+
+export const useTaskQueryKey = ["task-query"] as const;
+export const useTaskQuery = (id: string) => {
+	return useQuery({
+		queryKey: useTaskQueryKey,
+		queryFn: async () => {
+			const response = await apiClient.task[":id"].$get({
+				param: {
+					id,
+				},
+			});
+
+			if (!response.ok) {
+				throw new Error("Failed to fetch task");
+			}
+
+			const data = await response.json();
+			if (data.code !== 200) {
+				throw new Error(data.message);
+			}
+
+			return data.data;
+		},
+		refetchInterval: 5000,
+    	refetchIntervalInBackground: false,
+    	retry: 30,
 	});
 };

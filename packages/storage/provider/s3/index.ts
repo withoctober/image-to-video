@@ -87,3 +87,15 @@ export const getSignedUrl: GetSignedUrlHander = async (
 		throw new Error("Could not get signed url");
 	}
 };
+
+
+export const uploadFile = async (bucket: string, path: string, buff: Buffer) => {
+	const s3Client = getS3Client();
+	try {
+		return await s3Client.send(new PutObjectCommand({ Bucket: bucket, Key: path, Body: buff }));
+	} catch (e) {
+		logger.error(e);
+		throw new Error("Could not upload file");
+	}
+};
+

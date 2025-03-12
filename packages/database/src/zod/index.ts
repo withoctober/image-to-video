@@ -76,7 +76,7 @@ export const PurchaseScalarFieldEnumSchema = z.enum(['id','organizationId','user
 
 export const AiChatScalarFieldEnumSchema = z.enum(['id','organizationId','userId','title','messages','createdAt','updatedAt']);
 
-export const TaskScalarFieldEnumSchema = z.enum(['id','userId','clientIp','userAgent','prompt','model','image','createdAt','updatedAt']);
+export const TaskScalarFieldEnumSchema = z.enum(['id','userId','clientIp','userAgent','type','prompt','model','image','status','upstreamTaskId','fileId','videoUrl','createdAt','updatedAt']);
 
 export const SortOrderSchema = z.enum(['asc','desc']);
 
@@ -91,6 +91,10 @@ export const JsonNullValueFilterSchema = z.enum(['DbNull','JsonNull','AnyNull',]
 export const PurchaseTypeSchema = z.enum(['SUBSCRIPTION','ONE_TIME']);
 
 export type PurchaseTypeType = `${z.infer<typeof PurchaseTypeSchema>}`
+
+export const TaskStatusSchema = z.enum(['PREPARING','QUEUEING','PROCESSING','SUCCESS','FAIL']);
+
+export type TaskStatusType = `${z.infer<typeof TaskStatusSchema>}`
 
 /////////////////////////////////////////
 // MODELS
@@ -285,13 +289,18 @@ export type AiChat = z.infer<typeof AiChatSchema>
 /////////////////////////////////////////
 
 export const TaskSchema = z.object({
+  status: TaskStatusSchema,
   id: z.string().cuid(),
   userId: z.string().nullable(),
   clientIp: z.string().nullable(),
   userAgent: z.string().nullable(),
+  type: z.string(),
   prompt: z.string(),
   model: z.string(),
   image: z.string().nullable(),
+  upstreamTaskId: z.string().nullable(),
+  fileId: z.string().nullable(),
+  videoUrl: z.string().nullable(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
 })

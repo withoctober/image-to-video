@@ -1,7 +1,7 @@
 import { BizException } from "@repo/utils";
 import axios from "axios";
 
-export async function generateVideo(prompt: string, image: string) {
+export async function generateVideo(prompt: string, image: string, promptOptimizer: boolean) {
 	try {
 		const res = await axios({
 			method: "post",
@@ -14,6 +14,8 @@ export async function generateVideo(prompt: string, image: string) {
 				model: "I2V-01-live",
 				prompt: prompt,
 				first_frame_image: image,
+				prompt_optimizer: promptOptimizer,
+				callback_url: process.env.MINIMAXI_CALLBACK_URL,
 			},
 		});
 		return res.data;
