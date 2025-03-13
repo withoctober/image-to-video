@@ -14,7 +14,7 @@ export function CallToAction() {
                     <p className="mx-auto mb-8 flex flex-col items-center justify-center gap-5 sm:flex-row sm:gap-8 md:gap-10 lg:mb-12">
                         {t("description")}
                     </p>
-                    <a href="#" className="mb-4 inline-block items-center bg-black px-6 py-3 text-center font-semibold text-white">
+                    <a href="#generator" className="mb-4 inline-block items-center bg-black px-6 py-3 text-center font-semibold text-white">
                         {t("button")}
                     </a>
                 </div>
