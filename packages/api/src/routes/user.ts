@@ -20,7 +20,6 @@ export const getCredits = async (userId: string): Promise<UserCredits> => {
 	const purchase = await db.purchase.findFirst({
 		where: {
 			userId,
-			status: "active",
 		},
 	});
 

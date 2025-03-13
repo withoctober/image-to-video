@@ -193,7 +193,7 @@ export const config = {
 					{
 						type: "one-time",
 						productId: process.env
-							.NEXT_PUBLIC_PRODUCT_ID_PRO_MONTHLY as string,
+							.NEXT_PUBLIC_PRODUCT_ID_PRO as string,
 						amount: 29.9,
 						currency: "USD",
 					},
