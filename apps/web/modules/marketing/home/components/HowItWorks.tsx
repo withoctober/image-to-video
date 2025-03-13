@@ -8,7 +8,7 @@ export function HowItWorks() {
       <div className="mx-auto w-full max-w-7xl px-5 md:px-10 pt-12 lg:pt-48">
         {/* Title */}
         <div className="mx-auto mb-6 lg:mb-0 lg:max-w-5xl lg:text-center">
-          <h2 className="font-bold text-4xl lg:text-5xl">
+          <h2 className="font-bold text-3xl lg:text-5xl">
             {t("title")}
           </h2>
           <p className="mt-6 text-balance text-lg opacity-50">

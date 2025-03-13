@@ -816,20 +816,72 @@
 			"getStartedButton": "Get Started"
 		},
 		"howItWorks": {
-			"title": "How it works",
+			"title": "How It Works",
 			"subtitle": "Transforming Image to Video in 3 Simple Steps, Easy to Use",
 			"step1": {
 				"title": "Step 1: Upload Your Image",
-				"description": "Upload your image to the Image to Video Generator. The image will be used as the main subject of the video."
+				"description": "Upload your image to the Image to Video AI. The image will be used as the main subject of the video."
 			},
 			"step2": {
 				"title": "Step 2: Input Prompt",
-				"description": "Input your prompt to the Image to Video Generator. The prompt will be used to generate the video. Your can enabled the prompt optimizer to enhance the generation quality."
+				"description": "Input your prompt to the Image to Video AI. The prompt will be used to generate the video. Your can enabled the prompt optimizer to enhance the generation quality."
 			},
 			"step3": {
 				"title": "Step 3: Generate Video",
 				"description": "Click the generate button to generate the video. The video will be displayed in the output box after the generation is complete."
 			}
+		},
+		"usecases": {
+			"title": "Powerful Use Cases for Every Creator",
+			"subtitle": "From product demos to social media content, our Image to Video AI Generator has you covered.",
+			"01": {
+				"title": "Case 1",
+				"subtitle": "Go Viral Faster with Image to Video AI",
+				"description": "Tired of manually editing Reels? Our Image to Video AI transforms your Instagram posts into dynamic stories with one-click transitions and beat-synced music. Simply upload group photos from your last trip, and watch AI generate a travel vlog complete with animated maps and emoji overlays – all formatted perfectly for TikTok's 9:16 frame."
+			},
+			"02": {
+				"title": "Case 2",
+				"subtitle": "Make Lessons Unforgettable Using Image to Video AI",
+				"description": "Textbook diagrams put students to sleep. Convert them into interactive explainer videos where mitochondria actually MOVE and math equations solve themselves – all powered by intelligent Image to Video AI technology."
+			},
+			"03": {
+				"title": "Case 3",
+				"subtitle": "Hollywood-Style Wedding Films from Photos – Powered by AI",
+				"description": "Your wedding photos hold magic our Image to Video AI unlocks. Upload the first dance photo and receive a slow-motion sequence with virtual crowd reactions. Share parents' old portraits to create a 'through the generations' montage with vintage film effects."
+			}
+		},
+		"faq": {
+			"title": "Frequently Asked Questions",
+			"subtitle": "Answers to common questions about our Image to Video AI Generator.",
+			"01": {
+				"question": "What is Image to Video AI?",
+				"answer": "Image to Video AI is an innovative artificial intelligence-powered platform designed to convert static images into captivating, high-quality videos. Whether you have a single photo or a collection of images, Image to Video AI uses advanced AI algorithms to analyze the content, interpret the context, and generate smooth, dynamic videos with realistic transitions and effects. This tool is perfect for creating engaging content for social media, marketing, presentations, or personal projects."
+			},
+			"02": {
+				"question": "How does Image to Video AI work?",
+				"answer": "Image to Video AI employs state-of-the-art deep learning models to process your images. It begins by analyzing the visual elements, such as objects, people, and backgrounds, and then applies AI-driven techniques to add motion, transitions, and effects. The AI intelligently predicts how to animate the content, ensuring natural and lifelike results. While the current version focuses on dynamic video generation, future updates will introduce additional customization options to enhance your creative experience."
+			},
+			"03": {
+				"question": "What formats are supported by Image to Video AI?",
+				"answer": "Currently, Image to Video AI supports popular image formats like JPG and PNG for input and generates videos in the widely used MP4 format. While the platform does not yet support additional video formats or advanced format adjustments, we are actively working on expanding these capabilities. Stay tuned for future updates that will offer more flexibility and compatibility with various devices and platforms."
+			},
+			"04": {
+				"question": "Can I customize the output videos with Image to Video AI?",
+				"answer": "At this time, Image to Video AI focuses on generating dynamic videos from your images with minimal user intervention. However, we understand the importance of customization for creative projects. In future updates, we plan to introduce features such as video length adjustments, transition effects, background music, and text overlays. These enhancements will allow you to tailor the output to your specific needs and preferences."
+			},
+			"05": {
+				"question": "Is Image to Video AI suitable for professional use?",
+				"answer": "Image to Video AI is designed to cater to both casual users and professionals. While the current version provides high-quality video generation, we recognize that professionals may require additional features. Our roadmap includes advanced tools and customization options to meet the demands of business and professional use cases, such as marketing, social media campaigns, and presentations."
+			},
+			"06": {
+				"question": "What is the maximum number of credits I can use?",
+				"answer": "The maximum number of credits you can use depends on your subscription plan. For the paid plans, the number of credits is unlimited. You can upgrade your plan to increase your credit limit."
+			}
+		},
+		"callToAction": {
+			"title": "Ready to create stunning videos with Image to Video AI?",
+			"description": "Sign up now and start generating professional-quality videos in minutes.",
+			"button": "Get Started"
 		}
 	}
 }

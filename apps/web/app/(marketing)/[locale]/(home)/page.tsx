@@ -1,5 +1,5 @@
 import { FaqSection } from "@marketing/home/components/FaqSection";
-import { Features } from "@marketing/home/components/Features";
+import { Usecases } from "@marketing/home/components/Usecases";
 import Generator from "@marketing/home/components/Generator";
 import { Hero } from "@marketing/home/components/Hero";
 import { HowItWorks } from "@marketing/home/components/HowItWorks";
@@ -7,6 +7,7 @@ import { Newsletter } from "@marketing/home/components/Newsletter";
 import { PricingSection } from "@marketing/home/components/PricingSection";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { CallToAction } from "@marketing/home/components/CallToAction";
 
 export async function generateMetadata({
 	params,
@@ -43,10 +44,9 @@ export default async function Home({
 			<Hero />
 			<Generator />
 			<HowItWorks />
-			<Features />
-			<PricingSection />
+			<Usecases />
 			<FaqSection />
-			<Newsletter />
+			<CallToAction />
 		</>
 	);
 }
