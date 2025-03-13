@@ -4,10 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "@repo/auth/client";
 import { config } from "@repo/config";
 import { useAuthErrorMessages } from "@saas/auth/hooks/errors-messages";
-import { sessionQueryKey } from "@saas/auth/lib/api";
 import { OrganizationInvitationAlert } from "@saas/organizations/components/OrganizationInvitationAlert";
 import { useRouter } from "@shared/hooks/router";
-import { useQueryClient } from "@tanstack/react-query";
 import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
 import { Button } from "@ui/components/button";
 import {
@@ -26,7 +24,7 @@ import {
 	KeyIcon,
 	MailboxIcon,
 } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -60,7 +58,6 @@ export function LoginForm() {
 	const t = useTranslations();
 	const { getAuthErrorMessage } = useAuthErrorMessages();
 	const router = useRouter();
-	const queryClient = useQueryClient();
 	const searchParams = useSearchParams();
 	const { user, loaded: sessionLoaded } = useSession();
 
@@ -98,10 +95,6 @@ export function LoginForm() {
 				if (error) {
 					throw error;
 				}
-
-				queryClient.invalidateQueries({
-					queryKey: sessionQueryKey,
-				});
 
 				router.replace(redirectPath);
 			} else {
@@ -143,6 +136,27 @@ export function LoginForm() {
 
 	const signinMode = form.watch("mode");
 
+	// 获取当前语言
+	const currentLocale = useLocale();
+
+	if (config.auth.enableGoogleLogin) {
+		return (
+			<div className="flex flex-col items-center justify-center">
+				<h1 className="font-extrabold text-2xl md:text-3xl">
+					{t("auth.login.title")}
+				</h1>
+				<p className="text-sm text-muted-foreground">{t("auth.login.subtitle")}</p>
+				<div className="mt-6">
+					<SocialSigninButton
+						key={oAuthProviders.google.name}
+						provider="google"
+						redirect={`/${currentLocale}`}
+					/>
+				</div>
+			</div>
+		);
+	}
+
 	return (
 		<div>
 			<h1 className="font-extrabold text-2xl md:text-3xl">
@@ -153,7 +167,7 @@ export function LoginForm() {
 			</p>
 
 			{form.formState.isSubmitSuccessful &&
-			signinMode === "magic-link" ? (
+				signinMode === "magic-link" ? (
 				<Alert variant="success">
 					<MailboxIcon className="size-6" />
 					<AlertTitle>
@@ -288,41 +302,41 @@ export function LoginForm() {
 					{(config.auth.enablePasskeys ||
 						(config.auth.enableSignup &&
 							config.auth.enableSocialLogin)) && (
-						<>
-							<div className="relative my-6 h-4">
-								<hr className="relative top-2" />
-								<p className="-translate-x-1/2 absolute top-0 left-1/2 mx-auto inline-block h-4 bg-card px-2 text-center font-medium text-foreground/60 text-sm leading-tight">
-									{t("auth.login.continueWith")}
-								</p>
-							</div>
+							<>
+								<div className="relative my-6 h-4">
+									<hr className="relative top-2" />
+									<p className="-translate-x-1/2 absolute top-0 left-1/2 mx-auto inline-block h-4 bg-card px-2 text-center font-medium text-foreground/60 text-sm leading-tight">
+										{t("auth.login.continueWith")}
+									</p>
+								</div>
 
-							<div className="grid grid-cols-1 items-stretch gap-2 sm:grid-cols-2">
-								{config.auth.enableSignup &&
-									config.auth.enableSocialLogin &&
-									Object.keys(oAuthProviders).map(
-										(providerId) => (
-											<SocialSigninButton
-												key={providerId}
-												provider={
-													providerId as OAuthProvider
-												}
-											/>
-										),
+								<div className="grid grid-cols-1 items-stretch gap-2 sm:grid-cols-2">
+									{config.auth.enableSignup &&
+										config.auth.enableSocialLogin &&
+										Object.keys(oAuthProviders).map(
+											(providerId) => (
+												<SocialSigninButton
+													key={providerId}
+													provider={
+														providerId as OAuthProvider
+													}
+												/>
+											),
+										)}
+
+									{config.auth.enablePasskeys && (
+										<Button
+											variant="outline"
+											className="w-full sm:col-span-2"
+											onClick={() => signInWithPasskey()}
+										>
+											<KeyIcon className="mr-1.5 size-4 text-primary" />
+											{t("auth.login.loginWithPasskey")}
+										</Button>
 									)}
-
-								{config.auth.enablePasskeys && (
-									<Button
-										variant="outline"
-										className="w-full sm:col-span-2"
-										onClick={() => signInWithPasskey()}
-									>
-										<KeyIcon className="mr-1.5 size-4 text-primary" />
-										{t("auth.login.loginWithPasskey")}
-									</Button>
-								)}
-							</div>
-						</>
-					)}
+								</div>
+							</>
+						)}
 
 					{config.auth.enableSignup && (
 						<div className="mt-6 text-center text-sm">

@@ -2,7 +2,6 @@
 title: Terms and conditions
 ---
 
-# Image to Video AI Terms of Service
 
 **Effective Date**: 2025-03-13  
 **Last Updated**: 2025-03-13

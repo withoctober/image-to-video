@@ -6,9 +6,7 @@ import { UserMenu } from "@saas/shared/components/UserMenu";
 import { Logo } from "@shared/components/Logo";
 import { cn } from "@ui/lib";
 import {
-	BotMessageSquareIcon,
 	ChevronRightIcon,
-	HomeIcon,
 	SettingsIcon,
 	UserCog2Icon,
 	UserCogIcon,
@@ -31,46 +29,32 @@ export function NavBar() {
 		: "/app";
 
 	const menuItems = [
-		{
-			label: t("app.menu.start"),
-			href: basePath,
-			icon: HomeIcon,
-			isActive: pathname === basePath,
-		},
-		{
-			label: t("app.menu.aiChatbot"),
-			href: activeOrganization
-				? `/app/${activeOrganization.slug}/chatbot`
-				: "/app/chatbot",
-			icon: BotMessageSquareIcon,
-			isActive: pathname.includes("/chatbot"),
-		},
 		...(activeOrganization
 			? [
-					{
-						label: t("app.menu.organizationSettings"),
-						href: `${basePath}/settings`,
-						icon: SettingsIcon,
-						isActive: pathname.startsWith(`${basePath}/settings/`),
-					},
-				]
+				{
+					label: t("app.menu.organizationSettings"),
+					href: `${basePath}/settings`,
+					icon: SettingsIcon,
+					isActive: pathname.startsWith(`${basePath}/settings/`),
+				},
+			]
 			: [
-					{
-						label: t("app.menu.accountSettings"),
-						href: "/app/settings",
-						icon: UserCog2Icon,
-						isActive: pathname.startsWith("/app/settings/"),
-					},
-				]),
+				{
+					label: t("app.menu.accountSettings"),
+					href: "/app/settings",
+					icon: UserCog2Icon,
+					isActive: pathname.startsWith("/app/settings/"),
+				},
+			]),
 		...(user?.role === "admin"
 			? [
-					{
-						label: t("app.menu.admin"),
-						href: "/app/admin",
-						icon: UserCogIcon,
-						isActive: pathname.startsWith("/app/admin/"),
-					},
-				]
+				{
+					label: t("app.menu.admin"),
+					href: "/app/admin",
+					icon: UserCogIcon,
+					isActive: pathname.startsWith("/app/admin/"),
+				},
+			]
 			: []),
 	];
 
@@ -94,7 +78,7 @@ export function NavBar() {
 								useSidebarLayout,
 						})}
 					>
-						<Link href="/app" className="block">
+						<Link href="/" className="block">
 							<Logo />
 						</Link>
 
@@ -161,11 +145,10 @@ export function NavBar() {
 								)}
 							>
 								<menuItem.icon
-									className={`size-4 shrink-0 ${
-										menuItem.isActive
-											? "text-primary"
-											: "opacity-50"
-									}`}
+									className={`size-4 shrink-0 ${menuItem.isActive
+										? "text-primary"
+										: "opacity-50"
+										}`}
 								/>
 								<span>{menuItem.label}</span>
 							</Link>

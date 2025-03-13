@@ -1,6 +1,7 @@
 "use client";
 
 import { LocaleLink, useLocalePathname } from "@i18n/routing";
+import { UserMenu } from "@marketing/shared/components/UserMenu";
 import { config } from "@repo/config";
 import { useSession } from "@saas/auth/hooks/use-session";
 import { ColorModeToggle } from "@shared/components/ColorModeToggle";
@@ -17,6 +18,7 @@ import { cn } from "@ui/lib";
 import { MenuIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import NextLink from "next/link";
+import { usePathname } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { useDebounceCallback } from "usehooks-ts";
 
@@ -55,37 +57,33 @@ export function NavBar() {
 		label: string;
 		href: string;
 	}[] = [
-		{
-			label: t("common.menu.pricing"),
-			href: "/#pricing",
-		},
-		{
-			label: t("common.menu.faq"),
-			href: "/#faq",
-		},
-		{
-			label: t("common.menu.blog"),
-			href: "/blog",
-		},
-		{
-			label: t("common.menu.changelog"),
-			href: "/changelog",
-		},
-		...(config.contactForm.enabled
-			? [
+			{
+				label: t("common.menu.pricing"),
+				href: "/pricing",
+			},
+			{
+				label: t("common.menu.blog"),
+				href: "/blog",
+			},
+			{
+				label: t("common.menu.changelog"),
+				href: "/changelog",
+			},
+			...(config.contactForm.enabled
+				? [
 					{
 						label: t("common.menu.contact"),
 						href: "/contact",
 					},
 				]
-			: []),
-		{
-			label: t("common.menu.docs"),
-			href: "/docs",
-		},
-	];
+				: []),
+		];
 
 	const isMenuItemActive = (href: string) => localePathname.startsWith(href);
+
+
+	// 获取当前pathname
+	const pathname = usePathname();
 
 	return (
 		<nav
@@ -188,16 +186,7 @@ export function NavBar() {
 
 						{config.ui.saas.enabled &&
 							(user ? (
-								<Button
-									key="dashboard"
-									className="hidden lg:flex"
-									asChild
-									variant="secondary"
-								>
-									<NextLink href="/app">
-										{t("common.menu.dashboard")}
-									</NextLink>
-								</Button>
+								<UserMenu />
 							) : (
 								<Button
 									key="login"
@@ -205,7 +194,9 @@ export function NavBar() {
 									asChild
 									variant="secondary"
 								>
-									<NextLink href="/auth/login">
+									<NextLink
+										href={`/auth/login?redirect=${pathname}`}
+									>
 										{t("common.menu.login")}
 									</NextLink>
 								</Button>

@@ -17,16 +17,8 @@ export default async function PricingPage() {
 			<ChangelogSection
 				items={[
 					{
-						date: "2024-03-01",
-						changes: ["🚀 Improved performance"],
-					},
-					{
-						date: "2024-02-01",
-						changes: ["🎨 Updated design", "🐞 Fixed a bug"],
-					},
-					{
-						date: "2024-01-01",
-						changes: ["🎉 Added new feature", "🐞 Fixed a bug"],
+						date: "2025-03-13",
+						changes: ["🚀 New Feature Added"],
 					},
 				]}
 			/>

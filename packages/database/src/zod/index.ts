@@ -76,7 +76,11 @@ export const PurchaseScalarFieldEnumSchema = z.enum(['id','organizationId','user
 
 export const AiChatScalarFieldEnumSchema = z.enum(['id','organizationId','userId','title','messages','createdAt','updatedAt']);
 
+export const ProductScalarFieldEnumSchema = z.enum(['id','name','productId','quota','period','createdAt','updatedAt']);
+
 export const TaskScalarFieldEnumSchema = z.enum(['id','userId','clientIp','userAgent','type','prompt','model','image','status','upstreamTaskId','fileId','videoUrl','createdAt','updatedAt']);
+
+export const CreditTransactionScalarFieldEnumSchema = z.enum(['id','userId','credit','type','purchaseId','expiresAt','createdAt','updatedAt']);
 
 export const SortOrderSchema = z.enum(['asc','desc']);
 
@@ -92,9 +96,17 @@ export const PurchaseTypeSchema = z.enum(['SUBSCRIPTION','ONE_TIME']);
 
 export type PurchaseTypeType = `${z.infer<typeof PurchaseTypeSchema>}`
 
+export const ProductPeriodTypeSchema = z.enum(['DAILY','WEEKLY','MONTHLY','YEARLY','ONE_TIME']);
+
+export type ProductPeriodTypeType = `${z.infer<typeof ProductPeriodTypeSchema>}`
+
 export const TaskStatusSchema = z.enum(['PREPARING','QUEUEING','PROCESSING','SUCCESS','FAIL']);
 
 export type TaskStatusType = `${z.infer<typeof TaskStatusSchema>}`
+
+export const CreditTransactionTypeSchema = z.enum(['GIFT','PURCHASE']);
+
+export type CreditTransactionTypeType = `${z.infer<typeof CreditTransactionTypeSchema>}`
 
 /////////////////////////////////////////
 // MODELS
@@ -285,6 +297,22 @@ export const AiChatSchema = z.object({
 export type AiChat = z.infer<typeof AiChatSchema>
 
 /////////////////////////////////////////
+// PRODUCT SCHEMA
+/////////////////////////////////////////
+
+export const ProductSchema = z.object({
+  period: ProductPeriodTypeSchema,
+  id: z.string().cuid(),
+  name: z.string().nullable(),
+  productId: z.string(),
+  quota: z.number().int(),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
+})
+
+export type Product = z.infer<typeof ProductSchema>
+
+/////////////////////////////////////////
 // TASK SCHEMA
 /////////////////////////////////////////
 
@@ -306,3 +334,20 @@ export const TaskSchema = z.object({
 })
 
 export type Task = z.infer<typeof TaskSchema>
+
+/////////////////////////////////////////
+// CREDIT TRANSACTION SCHEMA
+/////////////////////////////////////////
+
+export const CreditTransactionSchema = z.object({
+  type: CreditTransactionTypeSchema,
+  id: z.string().cuid(),
+  userId: z.string(),
+  credit: z.number().int(),
+  purchaseId: z.string().nullable(),
+  expiresAt: z.coerce.date().nullable(),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
+})
+
+export type CreditTransaction = z.infer<typeof CreditTransactionSchema>

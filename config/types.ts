@@ -28,6 +28,7 @@ export type Config = {
 		redirectAfterSignIn: string;
 		redirectAfterLogout: string;
 		sessionCookieMaxAge: number;
+		enableGoogleLogin: boolean;
 	};
 	mails: {
 		from: string;

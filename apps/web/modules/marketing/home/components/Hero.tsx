@@ -7,7 +7,7 @@ export function Hero() {
 	const t = useTranslations("main.hero");
 
 	return (
-		<div className="mx-auto w-full max-w-7xl py-16 lg:pt-30 lg:pb-48">
+		<section className="mx-auto w-full max-w-7xl py-16 lg:pt-30 lg:pb-48">
 			<div className="grid grid-cols-1 grid-rows-2 items-center justify-items-start gap-8 sm:gap-16 lg:grid-cols-2 lg:grid-rows-1 mt-20 px-6 lg:px-0">
 				<div className="flex flex-col">
 					<h1 className="mb-4 text-4xl font-bold md:text-6xl md:leading-tight">
@@ -39,6 +39,6 @@ export function Hero() {
 					</div>
 				</div>
 			</div>
-		</div>
+		</section>
 	);
 }

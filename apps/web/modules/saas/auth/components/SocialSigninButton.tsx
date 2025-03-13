@@ -10,16 +10,18 @@ import { oAuthProviders } from "../constants/oauth-providers";
 export function SocialSigninButton({
 	provider,
 	className,
+	redirect,
 }: {
 	provider: keyof typeof oAuthProviders;
 	className?: string;
+	redirect?: string;
 }) {
 	const [invitationId] = useQueryState("invitationId", parseAsString);
 	const providerData = oAuthProviders[provider];
 
-	const redirectPath = invitationId
-		? `/app/organization-invitation/${invitationId}`
-		: config.auth.redirectAfterSignIn;
+	// 获取url的参数
+
+	const redirectPath = redirect || config.auth.redirectAfterSignIn || "/";
 
 	const onSignin = () => {
 		const callbackURL = new URL(redirectPath, window.location.origin);

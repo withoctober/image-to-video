@@ -181,6 +181,7 @@ model Purchase {
   updatedAt      DateTime      @updatedAt
 
   @@index([subscriptionId])
+  @@map("purchase")
 }
 
 model AiChat {
@@ -197,6 +198,28 @@ model AiChat {
 
   @@map("ai_chat")
 }
+
+enum ProductPeriodType {
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+  ONE_TIME
+}
+
+model Product {
+  id String @id @default(cuid())
+  name String?
+  productId String
+  quota Int
+  period ProductPeriodType
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("product")
+}
+
 
 
 enum TaskStatus {
@@ -230,4 +253,25 @@ model Task {
   updatedAt DateTime @updatedAt
 
   @@map("task")
+}
+
+
+enum CreditTransactionType {
+  GIFT
+  PURCHASE
+}
+
+model CreditTransaction {
+  id     String @id @default(cuid())
+  userId String
+  credit Int
+  type   CreditTransactionType
+  purchaseId String?
+  
+  expiresAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("credit_transaction")
 }

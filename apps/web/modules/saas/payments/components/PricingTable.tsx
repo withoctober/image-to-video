@@ -107,13 +107,7 @@ export function PricingTable({
 					</Tabs>
 				</div>
 			)}
-			<div
-				className={cn("grid grid-cols-1 gap-4", {
-					"@xl:grid-cols-2": filteredPlans.length >= 2,
-					"@3xl:grid-cols-3": filteredPlans.length >= 3,
-					"@4xl:grid-cols-4": filteredPlans.length >= 4,
-				})}
-			>
+			<div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
 				{filteredPlans
 					.filter(([planId]) => planId !== activePlanId)
 					.map(([planId, plan]) => {
@@ -225,21 +219,21 @@ export function PricingTable({
 														{" / "}
 														{interval === "month"
 															? t(
-																	"pricing.month",
-																	{
-																		count:
-																			price.intervalCount ??
-																			1,
-																	},
-																)
+																"pricing.month",
+																{
+																	count:
+																		price.intervalCount ??
+																		1,
+																},
+															)
 															: t(
-																	"pricing.year",
-																	{
-																		count:
-																			price.intervalCount ??
-																			1,
-																	},
-																)}
+																"pricing.year",
+																{
+																	count:
+																		price.intervalCount ??
+																		1,
+																},
+															)}
 													</span>
 												)}
 												{organizationId &&

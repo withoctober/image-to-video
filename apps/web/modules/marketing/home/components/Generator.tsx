@@ -2,7 +2,10 @@
 
 import type React from "react";
 
+import { localeRedirect } from "@i18n/routing";
 import { useTaskGenerateMutation, useTaskQuery } from "@marketing/home/lib/api";
+import { LoginPopup } from "@marketing/shared/components/LoginPopup";
+import { useGetCreditQuery } from "@marketing/shared/lib/api";
 import { useSession } from "@saas/auth/hooks/use-session";
 import { Button } from "@ui/components/button";
 import { } from "@ui/components/tabs";
@@ -11,6 +14,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@ui/co
 import imageCompression from "browser-image-compression";
 import { Download, Loader2, Share, Trash2, Upload, Wand2, } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -34,6 +38,17 @@ export default function Generator() {
 	const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
 
 	const t = useTranslations("generator");
+
+	const handleCloseLoginPopup = () => {
+		setIsLoginPopupOpen(false);
+	};
+
+
+
+	// 获取用户积分
+	const { data: credit, refetch } = useGetCreditQuery(!!user);
+
+
 
 	const fileToBase64 = (file: File): Promise<string> => {
 		return new Promise((resolve, reject) => {
@@ -153,6 +168,8 @@ export default function Generator() {
 	}, [taskData]);
 
 
+	console.log(user);
+	console.log(isLoginPopupOpen);
 
 	const taskGenerateMutation = useTaskGenerateMutation();
 	const handleGenerate = async () => {
@@ -163,6 +180,22 @@ export default function Generator() {
 
 		if (!uploadedImage) {
 			toast.error(t("imageNotUploaded"));
+			return;
+		}
+
+		if (!user) {
+			setIsLoginPopupOpen(true);
+			return;
+		}
+
+		if (credit && credit.used >= credit.quota) {
+			// 获取当前locale
+			const locale = window.location.pathname.split("/")[1] || "en"; // 从当前路径获取locale
+			toast.error(t("maxUsage"));
+			localeRedirect({
+				locale: locale,
+				href: "/pricing",
+			});
 			return;
 		}
 
@@ -208,6 +241,8 @@ export default function Generator() {
 		</div>
 	), []);
 
+	// 获取当前路径
+	const currentPath = usePathname();
 	const PreviewVideo = useCallback(() => (
 		<div className="flex flex-col justify-start items-center h-full">
 			<div className="h-[250px] lg:h-[350px] rounded-lg relative">
@@ -253,6 +288,11 @@ export default function Generator() {
 
 	return (
 		<section className="max-w-7xl mx-auto min-h-[1200px] lg:min-h-[800px] lg:mt-10 lg:pt-30" id="generator">
+			<LoginPopup
+				open={isLoginPopupOpen}
+				onClose={handleCloseLoginPopup}
+				redirect={currentPath}
+			/>
 			<div className="rounded-lg border bg-card p-6 shadow-sm">
 				<div className="space-y-2 flex flex-start">
 					<h2 className="text-xl font-bold">
@@ -365,6 +405,7 @@ export default function Generator() {
 							</div>
 							{user && (
 								<div className="flex justify-end">
+									credits: {credit?.used} / {credit?.quota}
 								</div>
 							)}
 							<Button
@@ -377,7 +418,11 @@ export default function Generator() {
 								) : (
 									<Upload className="mr-2 h-4 w-4" />
 								)}
-								{t("generateButton")}
+								{t("generateButton")} {user && (
+									<span className="text-xs text-muted-foreground">
+										(cost 10 credits)
+									</span>
+								)}
 							</Button>
 						</div>
 					</div>

@@ -4,7 +4,7 @@ export const config = {
 	// Internationalization
 	i18n: {
 		// Whether internationalization should be enabled (if disabled, you still need to define the locale you want to use below and set it as the default locale)
-		enabled: true,
+		enabled: false,
 		// Define all locales here that should be available in the app
 		// You need to define a label that is shown in the language selector and a currency that should be used for pricing with this locale
 		locales: {
@@ -71,11 +71,11 @@ export const config = {
 	// Organizations
 	organizations: {
 		// Whether organizations are enabled in general
-		enable: true,
+		enable: false,
 		// Whether billing for organizations should be enabled (below you can enable it for users instead)
 		enableBilling: true,
 		// Whether the organization should be hidden from the user (use this for multi-tenant applications)
-		hideOrganization: false,
+		hideOrganization: true,
 		// Should users be able to create new organizations? Otherwise only admin users can create them
 		enableUsersToCreateOrganizations: true,
 		// Whether users should be required to be in an organization. This will redirect users to the organization page after sign in
@@ -101,19 +101,20 @@ export const config = {
 		// Whether users should be able to create accounts (otherwise users can only be by admins)
 		enableSignup: true,
 		// Whether users should be able to sign in with a magic link
-		enableMagicLink: true,
+		enableMagicLink: false,
 		// Whether users should be able to sign in with a social provider
 		enableSocialLogin: true,
 		// Whether users should be able to sign in with a passkey
-		enablePasskeys: true,
+		enablePasskeys: false,
 		// Whether users should be able to sign in with a password
-		enablePasswordLogin: true,
+		enablePasswordLogin: false,
 		// where users should be redirected after the sign in
 		redirectAfterSignIn: "/app",
 		// where users should be redirected after logout
 		redirectAfterLogout: "/",
 		// how long a session should be valid
 		sessionCookieMaxAge: 60 * 60 * 24 * 30,
+		enableGoogleLogin: true,
 	},
 	// Mails
 	mails: {
@@ -160,46 +161,43 @@ export const config = {
 		plans: {
 			// The free plan is treated differently. It will automatically be assigned if the user has no other plan.
 			free: {
-				isFree: true,
+				isFree: false,
+			},
+			trial: {
+				recommended: false,
+				prices: [
+					{
+						type: "one-time",
+						productId: process.env
+							.NEXT_PUBLIC_PRODUCT_ID_TRIAL as string,
+						amount: 4.9,
+						currency: "USD",
+					},
+				],
+			},
+			basic: {
+				recommended: false,
+				prices: [
+					{
+						type: "one-time",
+						productId: process.env
+							.NEXT_PUBLIC_PRODUCT_ID_BASIC as string,
+						amount: 9.9,
+						currency: "USD",
+					},
+				],
 			},
 			pro: {
 				recommended: true,
 				prices: [
 					{
-						type: "recurring",
-						productId: process.env
-							.NEXT_PUBLIC_PRODUCT_ID_PRO_MONTHLY as string,
-						interval: "month",
-						amount: 29,
-						currency: "USD",
-						seatBased: true,
-						trialPeriodDays: 7,
-					},
-					{
-						type: "recurring",
-						productId: process.env
-							.NEXT_PUBLIC_PRODUCT_ID_PRO_YEARLY as string,
-						interval: "year",
-						amount: 290,
-						currency: "USD",
-						seatBased: true,
-						trialPeriodDays: 7,
-					},
-				],
-			},
-			lifetime: {
-				prices: [
-					{
 						type: "one-time",
 						productId: process.env
-							.NEXT_PUBLIC_PRODUCT_ID_LIFETIME as string,
-						amount: 799,
+							.NEXT_PUBLIC_PRODUCT_ID_PRO_MONTHLY as string,
+						amount: 29.9,
 						currency: "USD",
 					},
 				],
-			},
-			enterprise: {
-				isEnterprise: true,
 			},
 		},
 	},

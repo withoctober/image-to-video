@@ -2,8 +2,6 @@
 title: Privacy Policy
 ---
 
-# Image to Video AI Privacy Policy
-
 **Effective Date**: 2025-03-13  
 **Last Updated**: 2025-03-13
 

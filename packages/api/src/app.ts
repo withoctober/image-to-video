@@ -23,6 +23,7 @@ import { organizationsRouter } from "./routes/organizations/router";
 import { paymentsRouter } from "./routes/payments/router";
 import { taskRouter } from "./routes/task";
 import { uploadsRouter } from "./routes/uploads";
+import { userRouter } from "./routes/user";
 import { webhooksRouter } from "./routes/webhooks";
 
 export const app = new Hono().basePath("/api");
@@ -55,7 +56,8 @@ const appRouter = app
 	.route("/", organizationsRouter)
 	.route("/", adminRouter)
 	.route("/", healthRouter)
-	.route("/", taskRouter);
+	.route("/", taskRouter)
+	.route("/", userRouter);
 
 app.get(
 	"/app-openapi",
