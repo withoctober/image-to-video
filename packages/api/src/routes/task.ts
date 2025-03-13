@@ -5,11 +5,14 @@ import { BadRequestResponse, SuccessResponse } from "@repo/utils";
 import { Hono } from "hono";
 import { validator } from "hono-openapi/zod";
 import { z } from "zod";
+import { authMiddleware } from "../middleware/auth";
+import { getCredits } from "./user";
 
 export const taskRouter = new Hono()
 	.basePath("/task")
 	.post(
 		"generate",
+		authMiddleware,
 		validator(
 			"json",
 			z.object({
@@ -23,15 +26,22 @@ export const taskRouter = new Hono()
 			const { prompt, image, type, promptOptimizer } =
 				c.req.valid("json");
 
+			const user = c.get("user");
+			const credits = await getCredits(user.id);
+			if (credits.used >= credits.quota) {
+				return c.json(BadRequestResponse("credits not enough"));
+			}
+
 			if (type === "image-to-video" && !image) {
 				return c.json(BadRequestResponse("image is required"));
 			}
 			const task = await db.task.create({
 				data: {
+					userId: user.id,
 					prompt,
 					model: "I2V-01-live",
 					type,
-					status: "PREPARING",
+					status: "INIT",
 				},
 			});
 
@@ -41,11 +51,21 @@ export const taskRouter = new Hono()
 			const path = `images/task-${task.id}.png`;
 			await uploadFile(process.env.S3_BUCKET_NAME || "", path, imageFile);
 
-			const video = await generateVideo(
-				prompt,
-				image || "",
-				promptOptimizer || true,
-			);
+			let video: any;
+			try {
+				video = await generateVideo(
+					prompt,
+					image || "",
+					promptOptimizer || true,
+				);
+			} catch (error) {
+				console.error(error);
+				await db.task.update({
+					where: { id: task.id },
+					data: { status: "FAIL" },
+				});
+				return c.json(BadRequestResponse("generate video failed"));
+			}
 
 			await db.task.update({
 				where: { id: task.id },

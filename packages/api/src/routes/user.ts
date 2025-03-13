@@ -46,11 +46,14 @@ export const getCredits = async (userId: string): Promise<UserCredits> => {
 				createdAt: {
 					gte: new Date(new Date().setHours(0, 0, 0, 0)),
 				},
+				status: {
+					notIn: ["FAIL", "INIT"],
+				},
 			},
 		});
 		return {
 			quota: 0 + giftQuota,
-			used: count,
+			used: count * 10,
 		};
 	}
 
@@ -75,11 +78,14 @@ export const getCredits = async (userId: string): Promise<UserCredits> => {
 			createdAt: {
 				gte: planDateAt,
 			},
+			status: {
+				notIn: ["FAIL", "INIT"],
+			},
 		},
 	});
 
 	return {
 		quota: (product?.quota ?? 0) + giftQuota,
-		used,
+		used: used * 10,
 	};
 };

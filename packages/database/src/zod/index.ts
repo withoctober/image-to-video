@@ -100,7 +100,7 @@ export const ProductPeriodTypeSchema = z.enum(['DAILY','WEEKLY','MONTHLY','YEARL
 
 export type ProductPeriodTypeType = `${z.infer<typeof ProductPeriodTypeSchema>}`
 
-export const TaskStatusSchema = z.enum(['PREPARING','QUEUEING','PROCESSING','SUCCESS','FAIL']);
+export const TaskStatusSchema = z.enum(['INIT','PREPARING','QUEUEING','PROCESSING','SUCCESS','FAIL']);
 
 export type TaskStatusType = `${z.infer<typeof TaskStatusSchema>}`
 
